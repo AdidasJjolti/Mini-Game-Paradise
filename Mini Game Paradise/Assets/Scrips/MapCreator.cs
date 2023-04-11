@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class MapCreator : MonoBehaviour
 {
-    float _blockWidth = 1;
-    float _blockHeight = 1;
-    int _blocksInScreen = 24;     // 화면 내 블록 수
+    float _blockWidth = 0.5f;
+    float _blockHeight = 0.5f;
+    int _blocksInScreen = 12;              // 화면 내 블록 수
+    float _offset = 2f;                    // 줄 간격
+    int _breakCount = 0;                   // 줄 파괴 횟수
 
     struct FloorBlock
     {
@@ -64,8 +66,9 @@ public class MapCreator : MonoBehaviour
         if(_leftLastBlock._isCreated == false)
         {
             blockPosition = _player.transform.position;
+            blockPosition -= new Vector2(0, 3);
             blockPosition.x += _blockWidth * (float)(_blocksInScreen / 2.0f);
-            blockPosition.y = 0;
+            blockPosition.y -= _offset * _breakCount;
         }
 
         // 이전에 생성한 블록이 있는 경우
@@ -77,6 +80,8 @@ public class MapCreator : MonoBehaviour
         // 최초 생성 위치에서 블록 하나만큼 왼쪽으로 이동 후 생성
         blockPosition.x -= _blockWidth;
         _blockCreator.CreateBlock(blockPosition);
+        _blockCreator.CreateBlock(blockPosition - new Vector2(0, _offset * (_breakCount + 1)));
+        _blockCreator.CreateBlock(blockPosition - new Vector2(0, _offset * (_breakCount + 2)));
         _leftLastBlock._position = blockPosition;
         _leftLastBlock._isCreated = true;
     }
@@ -89,8 +94,9 @@ public class MapCreator : MonoBehaviour
         if (_rightLastBlock._isCreated == false)
         {
             blockPosition = _player.transform.position;
+            blockPosition -= new Vector2(0, 3);
             blockPosition.x -= _blockWidth * (float)(_blocksInScreen / 2.0f);
-            blockPosition.y = 0;
+            blockPosition.y -= _offset * _breakCount;
         }
 
         // 이전에 생성한 블록이 있는 경우
@@ -102,6 +108,8 @@ public class MapCreator : MonoBehaviour
         // 최초 생성 위치에서 블록 하나만큼 오른쪽으로 이동 후 생성
         blockPosition.x += _blockWidth;
         _blockCreator.CreateBlock(blockPosition);
+        _blockCreator.CreateBlock(blockPosition - new Vector2(0, _offset * (_breakCount + 1)));
+        _blockCreator.CreateBlock(blockPosition - new Vector2(0, _offset * (_breakCount + 2)));
         _rightLastBlock._position = blockPosition;
         _rightLastBlock._isCreated = true;
     }

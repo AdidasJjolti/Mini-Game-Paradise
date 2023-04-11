@@ -6,7 +6,7 @@ public class BlockCreator : MonoBehaviour
 {
     [SerializeField] GameObject[] _blockPrefabs;
 
-    int _blockCount;
+    public int _blockCount;
 
     void Start()
     {
