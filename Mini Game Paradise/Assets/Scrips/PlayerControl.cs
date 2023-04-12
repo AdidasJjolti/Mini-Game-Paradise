@@ -6,11 +6,15 @@ public class PlayerControl : MonoBehaviour
 {
     Rigidbody2D _rigid;
     bool _isLeftMoving;
+    [SerializeField] GameObject _lTrigger;
+    [SerializeField] GameObject _rTrigger;
 
     void Awake()
     {
         _rigid = GetComponent<Rigidbody2D>();
         _isLeftMoving = false;
+        _lTrigger.SetActive(!_isLeftMoving);
+        _rTrigger.SetActive(_isLeftMoving);
     }
 
     // Update is called once per frame
@@ -36,6 +40,9 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _isLeftMoving = !_isLeftMoving;
+            _lTrigger.SetActive(!_isLeftMoving);
+            _rTrigger.SetActive(_isLeftMoving);
+            //transform.position -= new Vector3(0, 2, 0);
         }
     }
 
@@ -43,13 +50,6 @@ public class PlayerControl : MonoBehaviour
     // 플레이어의 이동 방향이 왼쪽인지 아닌지 반환
     public bool GetLeftMoving()
     {
-        if(_rigid.velocity.x < 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return _isLeftMoving;
     }
 }
