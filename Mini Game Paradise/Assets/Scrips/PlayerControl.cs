@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour
     bool _isLeftMoving;
     [SerializeField] GameObject _lTrigger;
     [SerializeField] GameObject _rTrigger;
+    [SerializeField] float _speed;
 
     void Awake()
     {
@@ -20,23 +21,24 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("Player velocity is " + _rigid.velocity);
         if (_isLeftMoving == false)
         {
-            _rigid.AddForce(Vector2.right * 5 * Time.deltaTime, ForceMode2D.Impulse);
-            if (_rigid.velocity.x > 5)
+            _rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Impulse);
+            if (_rigid.velocity.x > _speed)
             {
-                _rigid.velocity = new Vector2(5, 0);
+                _rigid.velocity = new Vector2(_speed, _rigid.velocity.y);
             }
         }
         else
         {
-            _rigid.AddForce(Vector2.right * -5 * Time.deltaTime, ForceMode2D.Impulse);
-            if (_rigid.velocity.x < -5)
+            _rigid.AddForce(Vector2.right * _speed * -1 * Time.deltaTime, ForceMode2D.Impulse);
+            if (_rigid.velocity.x < _speed * -1)
             {
-                _rigid.velocity = new Vector2(-5, 0);
+                _rigid.velocity = new Vector2(_speed * -1, _rigid.velocity.y);
             }
         }
-
+        /*
         if (Input.GetMouseButtonDown(0))
         {
             _isLeftMoving = !_isLeftMoving;
@@ -44,6 +46,7 @@ public class PlayerControl : MonoBehaviour
             _rTrigger.SetActive(_isLeftMoving);
             //transform.position -= new Vector3(0, 2, 0);
         }
+        */
     }
 
 
