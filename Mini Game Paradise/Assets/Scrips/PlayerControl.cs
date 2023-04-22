@@ -9,6 +9,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] GameObject _lTrigger;
     [SerializeField] GameObject _rTrigger;
     [SerializeField] float _speed;
+    bool _isGrounded;
 
     void Awake()
     {
@@ -49,6 +50,26 @@ public class PlayerControl : MonoBehaviour
         */
     }
 
+    // 플레이어가 땅에 닿아 있는 상태면 true, 아니면 false
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Line"))
+        {
+            Debug.Log("땅에 닿음");
+            _isGrounded = true;
+        }
+    }
+
+    public bool GetGrounded()
+    {
+        return _isGrounded;
+    }
+
+    public void SetGrounded(bool isGrounded)
+    {
+        Debug.Log("땅에서 떨어짐");
+        _isGrounded = isGrounded;
+    }
 
     // 플레이어의 이동 방향이 왼쪽인지 아닌지 반환
     public bool GetLeftMoving()

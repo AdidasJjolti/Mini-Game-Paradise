@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5829461886207469973}
   - component: {fileID: 5829461886207469994}
+  - component: {fileID: 477021053820764853}
   m_Layer: 0
   m_Name: YellowDoubleStar
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +48,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemType: 3
+--- !u!58 &477021053820764853
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5829461886207469972}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.12, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.24
 --- !u!1 &5829461886921995338
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +74,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5829461886921995339}
   - component: {fileID: 5829461886921995342}
-  - component: {fileID: 5829461886921995337}
   m_Layer: 0
   m_Name: Star (5)
   m_TagString: Item
@@ -132,22 +148,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &5829461886921995337
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5829461886921995338}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.19, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.13
 --- !u!1 &5829461887573041425
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +158,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5829461887573041430}
   - component: {fileID: 5829461887573041429}
-  - component: {fileID: 5829461887573041428}
   m_Layer: 0
   m_Name: Star (4)
   m_TagString: Item
@@ -233,19 +232,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &5829461887573041428
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5829461887573041425}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.19, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.13

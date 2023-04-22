@@ -11,7 +11,13 @@ public class ItemPool : MonoBehaviour
         {
             if(!instance)
             {
-                instance.GetComponent<ItemPool>();
+                instance = FindObjectOfType<ItemPool>();
+
+                if(instance == null)
+                {
+                    Debug.LogError("Instance doesn't exist.");
+                    return null;
+                }
             }
             return instance;
         }
@@ -44,27 +50,17 @@ public class ItemPool : MonoBehaviour
         {
             instance = this;
         }
-        else
+        else if(instance != this.GetComponent<ItemPool>())
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
 
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
-        _itemPool["yellowSingle"] = new List<GameObject>();
-        _itemPool["greenSingle"] = new List<GameObject>();
-        _itemPool["orangeSingle"] = new List<GameObject>();
-
-        _itemPool["yellowDouble"] = new List<GameObject>();
-        _itemPool["greenDouble"] = new List<GameObject>();
-        _itemPool["orangeDouble"] = new List<GameObject>();
-
-        _itemPool["yellowTriple"] = new List<GameObject>();
-        _itemPool["greenTriple"] = new List<GameObject>();
-        _itemPool["orangeTriple"] = new List<GameObject>();
+        CreateDictionary();
     }
 
     // 각 풀에 게임오브젝트 넣는 함수
@@ -72,49 +68,49 @@ public class ItemPool : MonoBehaviour
     {
         switch(key)
         {
-            case "yellowSingle":
+            case "YELLOW_SINGLE":
                 GameObject ySingleStar = Instantiate(_yellowSingleStar);
                 ySingleStar.SetActive(false);
                 _itemPool[key].Add(ySingleStar);
                 break;
-            case "greenSingle":
+            case "GREEN_SINGLE":
                 GameObject gSingleStar = Instantiate(_greenSingleStar);
                 gSingleStar.SetActive(false);
                 _itemPool[key].Add(gSingleStar);
                 break;
-            case "orangeSingle":
+            case "ORANGE_SINGLE":
                 GameObject oSingleStar = Instantiate(_orangeSingleStar);
                 oSingleStar.SetActive(false);
                 _itemPool[key].Add(oSingleStar);
                 break;
 
-            case "yellowDouble":
+            case "YELLOW_DOUBLE":
                 GameObject yDoubleStar = Instantiate(_yellowDoubleStar);
                 yDoubleStar.SetActive(false);
                 _itemPool[key].Add(yDoubleStar);
                 break;
-            case "greenDouble":
+            case "GREEN_DOUBLE":
                 GameObject gDoubleStar = Instantiate(_greenDoubleStar);
                 gDoubleStar.SetActive(false);
                 _itemPool[key].Add(gDoubleStar);
                 break;
-            case "orangeDouble":
+            case "ORANGE_DOUBLE":
                 GameObject oDoubleStar = Instantiate(_orangeDoubleStar);
                 oDoubleStar.SetActive(false);
                 _itemPool[key].Add(_orangeDoubleStar);
                 break;
 
-            case "yellowTriple":
+            case "YELLOW_TRIPLE":
                 GameObject yTripleStar = Instantiate(_yellowTripleStar);
                 yTripleStar.SetActive(false);
                 _itemPool[key].Add(yTripleStar);
                 break;
-            case "greenTriple":
+            case "GREEN_TRIPLE":
                 GameObject gTripleStar = Instantiate(_greenTripleStar);
                 gTripleStar.SetActive(false);
                 _itemPool[key].Add(gTripleStar);
                 break;
-            case "orangeTriple":
+            case "ORANGE_TRIPLE":
                 GameObject oTripleStar = Instantiate(_orangeTripleStar);
                 oTripleStar.SetActive(false);
                 _itemPool[key].Add(oTripleStar);
@@ -122,19 +118,53 @@ public class ItemPool : MonoBehaviour
         }
     }
 
-    // 풀에서 스타 아이템을 빼는 함수
-    GameObject PoolOut(string key)
+    void CreateDictionary()
     {
-        var items = _itemPool[key];
+        _itemPool["YELLOW_SINGLE"] = new List<GameObject>();
+        _itemPool["GREEN_SINGLE"] = new List<GameObject>();
+        _itemPool["ORANGE_SINGLE"] = new List<GameObject>();
 
-        if (items.Count == 0)
+        _itemPool["YELLOW_DOUBLE"] = new List<GameObject>();
+        _itemPool["GREEN_DOUBLE"] = new List<GameObject>();
+        _itemPool["ORANGE_DOUBLE"] = new List<GameObject>();
+
+        _itemPool["YELLOW_TRIPLE"] = new List<GameObject>();
+        _itemPool["GREEN_TRIPLE"] = new List<GameObject>();
+        _itemPool["ORANGE_TRIPLE"] = new List<GameObject>();
+    }
+
+    // 풀에서 스타 아이템을 빼는 함수
+    public GameObject PoolOut(string key)
+    {
+        // 딕셔너리가 생성되었지만 들어간 내용이 없는 경우
+        if(_itemPool.Count == 0)
+        {
+            CreateDictionary();
+        }
+
+        // 딕셔너리가 있지만 키 값이 잘못된 경우
+        if(_itemPool.ContainsKey(key) == false)
+        {
+            Debug.LogError("Invalid Key");
+            return null;
+        }
+
+        // 딕셔너리가 있고 키 값도 유효하지만 리스트가 안 만들어진 경우
+        _itemPool.TryGetValue(key, out var list);
+        if (list == null)
+        {
+            Debug.LogError("Invalid List");
+            return null;
+        }
+
+        if (list.Count == 0)
         {
             AddPool(key);
         }
 
-        int lastIndex = items.Count - 1;
-        GameObject star = items[lastIndex];
-        items.Remove(star);
+        int lastIndex = list.Count - 1;
+        GameObject star = list[lastIndex];
+        list.Remove(star);
         star.SetActive(true);
 
         return star;
@@ -147,41 +177,41 @@ public class ItemPool : MonoBehaviour
         {
             case _eItemType.YELLOW_SINGLE:
                 star.SetActive(false);
-                _itemPool["yellowSingle"].Add(star);
+                _itemPool["YELLOW_SINGLE"].Add(star);
                 break;
             case _eItemType.GREEN_SINGLE:
                 star.SetActive(false);
-                _itemPool["greenSingle"].Add(star);
+                _itemPool["GREEN_SINGLE"].Add(star);
                 break;
             case _eItemType.ORANGE_SINGLE:
                 star.SetActive(false);
-                _itemPool["orangeSingle"].Add(star);
+                _itemPool["ORANGE_SINGLE"].Add(star);
                 break;
 
             case _eItemType.YELLOW_DOUBLE:
                 star.SetActive(false);
-                _itemPool["yellowDouble"].Add(star);
+                _itemPool["YELLOW_DOUBLE"].Add(star);
                 break;
             case _eItemType.GREEN_DOUBLE:
                 star.SetActive(false);
-                _itemPool["greenDouble"].Add(star);
+                _itemPool["GREEN_DOUBLE"].Add(star);
                 break;
             case _eItemType.ORANGE_DOUBLE:
                 star.SetActive(false);
-                _itemPool["orangeDouble"].Add(star);
+                _itemPool["ORANGE_DOUBLE"].Add(star);
                 break;
 
             case _eItemType.YELLOW_TRIPLE:
                 star.SetActive(false);
-                _itemPool["yellowTriple"].Add(star);
+                _itemPool["YELLOW_TRIPLE"].Add(star);
                 break;
             case _eItemType.GREEN_TRIPLE:
                 star.SetActive(false);
-                _itemPool["greenTriple"].Add(star);
+                _itemPool["GREEN_TRIPLE"].Add(star);
                 break;
             case _eItemType.ORANGE_TRIPLE:
                 star.SetActive(false);
-                _itemPool["orangeTriple"].Add(star);
+                _itemPool["ORANGE_TRIPLE"].Add(star);
                 break;
         }
     }

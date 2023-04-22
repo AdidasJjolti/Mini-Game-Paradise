@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class BlockBreaker : MonoBehaviour
 {
-    [SerializeField] bool _isGrounded;
+    //[SerializeField] bool _isGrounded;
     [SerializeField] bool _isFirstTouch;
     [SerializeField] CapsuleCollider2D _playerCollider;
     [SerializeField] Rigidbody2D _playerRigidbody2D;
+    [SerializeField] PlayerControl _playerControl;
     bool _isClicked;
 
 
@@ -30,14 +31,16 @@ public class BlockBreaker : MonoBehaviour
     {
         if(_isClicked == true)
         {
-            if (collision.transform.CompareTag("Line"))
+            if (collision.transform.CompareTag("Line") && _playerControl.GetGrounded())
             {
                 _playerRigidbody2D.velocity = new Vector2(0.5f, _playerRigidbody2D.velocity.y);
                 collision.GetComponent<SpriteRenderer>().enabled = false;
                 collision.GetComponent<BoxCollider2D>().isTrigger = true;
+                StartCoroutine("SetPlayerState");
             }
         }
     }
+
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -47,24 +50,26 @@ public class BlockBreaker : MonoBehaviour
             Debug.DrawRay(transform.position, Vector3.down, Color.green, 2f);
             foreach (var item in hit)
             {
-                //Debug.Log("RaycastHit2D object is " + item.transform.name);
-                if (item.transform.CompareTag("Player"))
-                {
-                    continue;
-                }
-
                 if (item.transform.CompareTag("Line"))
                 {
-                    _isGrounded = true;
                     _playerCollider.isTrigger = false;
                     _isClicked = false;
                 }
-                //else
-                //{
-                //    _isGrounded = false;
-                //    _playerCollider.isTrigger = true;
-                //}
             }
         }
+    }
+
+    private bool onCoroutine;
+    IEnumerator SetPlayerState()
+    {
+        if(onCoroutine)
+        {
+            yield break;
+        }
+        onCoroutine = true;
+
+        yield return new WaitForEndOfFrame();
+        _playerControl.SetGrounded(false);
+        onCoroutine = false;
     }
 }

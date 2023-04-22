@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7721222736824027430}
   - component: {fileID: 7721222736824027435}
-  - component: {fileID: 7721222736824027432}
   m_Layer: 0
   m_Name: Star (1)
   m_TagString: Item
@@ -85,22 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7721222736824027432
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7721222736824027431}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.19, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.13
 --- !u!1 &7721222737236422673
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,9 +94,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7721222737236422672}
   - component: {fileID: 7721222737236422675}
+  - component: {fileID: 2955431384037130619}
   m_Layer: 0
   m_Name: YellowTripleStar
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,6 +133,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemType: 6
+--- !u!58 &2955431384037130619
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7721222737236422673}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.06}
+  serializedVersion: 2
+  m_Radius: 0.3
 --- !u!1 &7721222738076920636
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +159,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7721222738076920639}
   - component: {fileID: 7721222738076920608}
-  - component: {fileID: 7721222738076920609}
   m_Layer: 0
   m_Name: Star (2)
   m_TagString: Item
@@ -234,22 +233,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7721222738076920609
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7721222738076920636}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.19, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.13
 --- !u!1 &7721222738277577781
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +243,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7721222738277577780}
   - component: {fileID: 7721222738277577785}
-  - component: {fileID: 7721222738277577782}
   m_Layer: 0
   m_Name: Star (3)
   m_TagString: Item
@@ -335,19 +317,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7721222738277577782
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7721222738277577781}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.19, y: 0}
-  serializedVersion: 2
-  m_Radius: 3.13

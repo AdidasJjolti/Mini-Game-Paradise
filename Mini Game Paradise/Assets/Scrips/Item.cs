@@ -23,20 +23,19 @@ public enum _eItemType
 
 public class Item : MonoBehaviour
 {
-    SpriteRenderer _spriteRenderer;
     [SerializeField] _eItemType _itemType;
 
     void Awake()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(_spriteRenderer.enabled == true && collision.CompareTag("Player"))
+        if(collision.CompareTag("Player"))
         {
-            _spriteRenderer.enabled = false;
             Debug.Log("Got It!");
+            ItemPool.Instance.PoolIn(gameObject, _itemType);
         }
 
         if(collision.CompareTag("upperTrigger"))
