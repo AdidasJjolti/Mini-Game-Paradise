@@ -55,7 +55,7 @@ public class PlayerControl : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Line"))
         {
-            Debug.Log("∂•ø° ¥Í¿Ω");
+            //Debug.Log("∂•ø° ¥Í¿Ω");
             _isGrounded = true;
         }
     }

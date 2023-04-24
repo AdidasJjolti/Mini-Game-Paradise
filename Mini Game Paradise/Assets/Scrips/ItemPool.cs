@@ -69,49 +69,49 @@ public class ItemPool : MonoBehaviour
         switch(key)
         {
             case "YELLOW_SINGLE":
-                GameObject ySingleStar = Instantiate(_yellowSingleStar);
+                GameObject ySingleStar = Instantiate(_yellowSingleStar, transform);
                 ySingleStar.SetActive(false);
                 _itemPool[key].Add(ySingleStar);
                 break;
             case "GREEN_SINGLE":
-                GameObject gSingleStar = Instantiate(_greenSingleStar);
+                GameObject gSingleStar = Instantiate(_greenSingleStar, transform);
                 gSingleStar.SetActive(false);
                 _itemPool[key].Add(gSingleStar);
                 break;
             case "ORANGE_SINGLE":
-                GameObject oSingleStar = Instantiate(_orangeSingleStar);
+                GameObject oSingleStar = Instantiate(_orangeSingleStar, transform);
                 oSingleStar.SetActive(false);
                 _itemPool[key].Add(oSingleStar);
                 break;
 
             case "YELLOW_DOUBLE":
-                GameObject yDoubleStar = Instantiate(_yellowDoubleStar);
+                GameObject yDoubleStar = Instantiate(_yellowDoubleStar, transform);
                 yDoubleStar.SetActive(false);
                 _itemPool[key].Add(yDoubleStar);
                 break;
             case "GREEN_DOUBLE":
-                GameObject gDoubleStar = Instantiate(_greenDoubleStar);
+                GameObject gDoubleStar = Instantiate(_greenDoubleStar, transform);
                 gDoubleStar.SetActive(false);
                 _itemPool[key].Add(gDoubleStar);
                 break;
             case "ORANGE_DOUBLE":
-                GameObject oDoubleStar = Instantiate(_orangeDoubleStar);
+                GameObject oDoubleStar = Instantiate(_orangeDoubleStar, transform);
                 oDoubleStar.SetActive(false);
                 _itemPool[key].Add(_orangeDoubleStar);
                 break;
 
             case "YELLOW_TRIPLE":
-                GameObject yTripleStar = Instantiate(_yellowTripleStar);
+                GameObject yTripleStar = Instantiate(_yellowTripleStar, transform);
                 yTripleStar.SetActive(false);
                 _itemPool[key].Add(yTripleStar);
                 break;
             case "GREEN_TRIPLE":
-                GameObject gTripleStar = Instantiate(_greenTripleStar);
+                GameObject gTripleStar = Instantiate(_greenTripleStar, transform);
                 gTripleStar.SetActive(false);
                 _itemPool[key].Add(gTripleStar);
                 break;
             case "ORANGE_TRIPLE":
-                GameObject oTripleStar = Instantiate(_orangeTripleStar);
+                GameObject oTripleStar = Instantiate(_orangeTripleStar, transform);
                 oTripleStar.SetActive(false);
                 _itemPool[key].Add(oTripleStar);
                 break;
@@ -176,40 +176,49 @@ public class ItemPool : MonoBehaviour
         switch (type)
         {
             case _eItemType.YELLOW_SINGLE:
+                star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["YELLOW_SINGLE"].Add(star);
                 break;
             case _eItemType.GREEN_SINGLE:
+                star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["GREEN_SINGLE"].Add(star);
                 break;
             case _eItemType.ORANGE_SINGLE:
+                star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["ORANGE_SINGLE"].Add(star);
                 break;
 
             case _eItemType.YELLOW_DOUBLE:
+                star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["YELLOW_DOUBLE"].Add(star);
                 break;
             case _eItemType.GREEN_DOUBLE:
+                star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["GREEN_DOUBLE"].Add(star);
                 break;
             case _eItemType.ORANGE_DOUBLE:
+                star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["ORANGE_DOUBLE"].Add(star);
                 break;
 
             case _eItemType.YELLOW_TRIPLE:
+                star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["YELLOW_TRIPLE"].Add(star);
                 break;
             case _eItemType.GREEN_TRIPLE:
+                star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["GREEN_TRIPLE"].Add(star);
                 break;
             case _eItemType.ORANGE_TRIPLE:
+                star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["ORANGE_TRIPLE"].Add(star);
                 break;

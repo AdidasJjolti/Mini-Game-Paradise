@@ -318,7 +318,7 @@ MonoBehaviour:
   _orangeSingleStar: {fileID: 7356104234581009542, guid: cd22f06b3c9a16c4a9b248d1ea52347c, type: 3}
   _yellowDoubleStar: {fileID: 5829461886207469972, guid: 8a3cd394b5823484ea765aec6bcbb454, type: 3}
   _greenDoubleStar: {fileID: 1488970040654556456, guid: e20dc77a6fd7da34d9717e6bf8b467d2, type: 3}
-  _orangeDoubleStar: {fileID: 6953106153004883760, guid: 3a9537ded2c91ab459f2b47c5c823ac3, type: 3}
+  _orangeDoubleStar: {fileID: 5829461886207469972, guid: 8aa0e5fa657d5304fbc6775e914b5e34, type: 3}
   _yellowTripleStar: {fileID: 7721222737236422673, guid: 44de14f9b26d7db46aa12f045e40d1b9, type: 3}
   _greenTripleStar: {fileID: 4326621161294659240, guid: 4ab9b42439ad9c640a4dd389d2ebb54c, type: 3}
   _orangeTripleStar: {fileID: 667974732484470826, guid: 500c1b1b90981c541b38271392769f93, type: 3}
