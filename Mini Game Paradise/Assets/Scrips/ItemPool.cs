@@ -95,7 +95,7 @@ public class ItemPool : MonoBehaviour
                 _itemPool[key].Add(gDoubleStar);
                 break;
             case "ORANGE_DOUBLE":
-                GameObject oDoubleStar = Instantiate(_orangeDoubleStar, transform);
+                GameObject oDoubleStar = Instantiate(_orangeDoubleStar, transform) as GameObject;
                 oDoubleStar.SetActive(false);
                 _itemPool[key].Add(_orangeDoubleStar);
                 break;
