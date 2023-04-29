@@ -24,10 +24,11 @@ public enum _eItemType
 public class Item : MonoBehaviour
 {
     [SerializeField] _eItemType _itemType;
+    BreakBreakScoreManager _scoreManager;
 
     void Awake()
     {
-
+        _scoreManager = FindObjectOfType<BreakBreakScoreManager>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -35,6 +36,7 @@ public class Item : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             Debug.Log("Got It!");
+            _scoreManager.SendMessage("ItemScoreUpdate", _itemType);
             ItemPool.Instance.PoolIn(gameObject, _itemType);
         }
 
