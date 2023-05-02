@@ -22,7 +22,14 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
     {
         _blockBreaker.RegisterObserver(this.GetComponent<IObserver>());
         _curScore = 0;
-        _highestScore = 500;          // 테스트를 위해 임시 설정
+        if(PlayerPrefs.HasKey("BB_bestScore"))
+        {
+            _highestScore = PlayerPrefs.GetInt("BB_bestScore");
+        }
+        else
+        {
+            _highestScore = 0;
+        }
         _curScoreText.text = _curScore.ToString();
         _highestScoreText.text = _highestScore.ToString();
 
@@ -107,6 +114,15 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
         if(_isScoreRenewed)
         {
             _highestScoreText.text = _curScore.ToString();
+        }
+    }
+
+    public void SaveScore()
+    {
+        if(_isScoreRenewed)
+        {
+            PlayerPrefs.SetInt("BB_bestScore", _curScore);
+            Debug.Log("기록 바뀜");
         }
     }
 }

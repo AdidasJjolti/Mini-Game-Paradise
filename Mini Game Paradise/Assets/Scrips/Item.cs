@@ -26,9 +26,13 @@ public class Item : MonoBehaviour
     [SerializeField] _eItemType _itemType;
     BreakBreakScoreManager _scoreManager;
 
-    void Awake()
+
+    void OnEnable()
     {
-        _scoreManager = FindObjectOfType<BreakBreakScoreManager>();
+        if(_scoreManager == null)
+        {
+            _scoreManager = FindObjectOfType<BreakBreakScoreManager>();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
