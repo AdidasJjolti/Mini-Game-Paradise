@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateItem : MonoBehaviour
+public class BBCreateFriend : MonoBehaviour
 {
     Transform[] _blocks;
     bool _isCreating;
+    BBFriendPool _friendPool;
 
     void Awake()
     {
+        _friendPool = FindObjectOfType<BBFriendPool>();
+
         var tempArray = transform.GetComponentsInChildren<Transform>();
         _blocks = new Transform[tempArray.Length - 1];     // 나 자신을 제외한 임시 배열의 길이 - 1만큼 _blocks 배열의 크기가 결정됨
         int index = 0;                                     // 나 자신을 제외한 _blocks 배열의 크기만큼만 증가
@@ -22,15 +25,15 @@ public class CreateItem : MonoBehaviour
             index++;                                       // 최소 1회는 continue가 실행되여 index가 i보다 1 더 작음
         }
 
-        CreateStar();
+        CreateFriend();
     }
 
-    public void CreateStar()
+    public void CreateFriend()
     {
-        StartCoroutine("CreatingStar");
+        StartCoroutine("CreatingFriend");
     }
 
-    IEnumerator CreatingStar()
+    IEnumerator CreatingFriend()
     {
         if (_isCreating)
         {
@@ -39,7 +42,7 @@ public class CreateItem : MonoBehaviour
 
         _isCreating = true;
 
-        // 아이템 생성 확률 66%로 설정
+        // 친구 생성 확률 66%로 설정
         float chance = Random.Range(0f, 1f);
         if (chance > 0.66f)
         {
@@ -47,42 +50,25 @@ public class CreateItem : MonoBehaviour
             yield break;
         }
 
-        // 생성 확률 내에 들어오면 아이템 생성
-        int itemType = Random.Range(0, 9);
-        _eItemType type = (_eItemType)itemType;
+        // 생성 확률 내에 들어오면 친구 생성
+        int friendType = Random.Range(0, 4);
+        _eFriendType type = (_eFriendType)friendType;
 
         GameObject obj = null;
         int index = Random.Range(0, _blocks.Length);
         switch (type)
         {
-            case _eItemType.YELLOW_SINGLE:
-                obj = ItemPool.Instance.PoolOut("YELLOW_SINGLE");
+            case _eFriendType.MASKDUDE:
+                obj = _friendPool.PoolOut("MASKDUDE");
                 break;
-            case _eItemType.GREEN_SINGLE:
-                obj = ItemPool.Instance.PoolOut("GREEN_SINGLE");
+            case _eFriendType.NINJAFROG:
+                obj = _friendPool.PoolOut("NINJAFROG");
                 break;
-            case _eItemType.ORANGE_SINGLE:
-                obj = ItemPool.Instance.PoolOut("ORANGE_SINGLE");
+            case _eFriendType.PINKMAN:
+                obj = _friendPool.PoolOut("PINKMAN");
                 break;
-
-            case _eItemType.YELLOW_DOUBLE:
-                obj = ItemPool.Instance.PoolOut("YELLOW_DOUBLE");
-                break;
-            case _eItemType.GREEN_DOUBLE:
-                obj = ItemPool.Instance.PoolOut("GREEN_DOUBLE");
-                break;
-            case _eItemType.ORANGE_DOUBLE:
-                obj = ItemPool.Instance.PoolOut("ORANGE_DOUBLE");
-                break;
-
-            case _eItemType.YELLOW_TRIPLE:
-                obj = ItemPool.Instance.PoolOut("YELLOW_TRIPLE");
-                break;
-            case _eItemType.GREEN_TRIPLE:
-                obj = ItemPool.Instance.PoolOut("GREEN_TRIPLE");
-                break;
-            case _eItemType.ORANGE_TRIPLE:
-                obj = ItemPool.Instance.PoolOut("ORANGE_TRIPLE");
+            case _eFriendType.VIRTUALGUY:
+                obj = _friendPool.PoolOut("VIRTUALGUY");
                 break;
         }
 
@@ -92,6 +78,15 @@ public class CreateItem : MonoBehaviour
             ob.transform.parent = _blocks[index];
             ob.transform.position = _blocks[index].position + new Vector3(0, 0.5f, 0);
             Debug.Log($"block : {_blocks[index].position}, obj : {ob.transform.position}");
+            if(index >= _blocks.Length/2)           // 오른쪽 블럭에서 생성되면 우측 이동, 왼쪽 블럭에서 생성되면 좌측 이동으로 설정
+            {
+                ob.GetComponent<BBFriendStates>().SetLeftMoving(false);
+            }
+            else
+            {
+                ob.GetComponent<BBFriendStates>().SetLeftMoving(true);
+            }
+
         }
         else
         {

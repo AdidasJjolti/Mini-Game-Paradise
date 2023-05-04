@@ -9,7 +9,7 @@ public class BlockResetter : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Line") || collision.CompareTag("Item"))
+        if(collision.CompareTag("Line") || collision.CompareTag("Item") || collision.CompareTag("Friend"))
         {
             if(_player.GetLeftMoving() == true)
             {

@@ -8,6 +8,8 @@ TagManager:
   - Line
   - breakTrigger
   - Item
+  - Friend
+  - CameraTrigger
   layers:
   - Default
   - TransparentFX

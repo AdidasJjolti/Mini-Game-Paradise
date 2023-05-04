@@ -22,8 +22,10 @@ public class LineController : MonoBehaviour
                 return;
             }
             _parent = collision.transform.parent;
-            _parent.GetComponent<CreateItem>().CreateStar();
+            _parent.GetComponent<BBCreateItem>().CreateStar();
             Debug.Log("아이템이 다시 생겼지롱");
+            _parent.GetComponent<BBCreateFriend>().CreateFriend();
+            Debug.Log("친구가 다시 생겼지롱");
         }
     }
 }
