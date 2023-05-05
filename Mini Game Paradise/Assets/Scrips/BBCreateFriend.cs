@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BBCreateFriend : MonoBehaviour
 {
+    static bool _friendSkipLine;
     Transform[] _blocks;
     bool _isCreating;
     BBFriendPool _friendPool;
@@ -23,6 +25,12 @@ public class BBCreateFriend : MonoBehaviour
             }
             _blocks[index] = tempArray[i];
             index++;                                       // 최소 1회는 continue가 실행되여 index가 i보다 1 더 작음
+        }
+
+        if (_friendSkipLine == false)
+        {
+            _friendSkipLine = true;
+            return;
         }
 
         CreateFriend();

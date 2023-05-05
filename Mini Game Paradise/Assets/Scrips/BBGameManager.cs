@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class BBGameManager : MonoBehaviour
 {
-
     bool _isGameOver;
 
     void Start()
@@ -20,13 +19,7 @@ public class BBGameManager : MonoBehaviour
         {
             if(_isGameOver == false)
             {
-                _isGameOver = true;
-                Time.timeScale = 0f;
-                BreakBreakScoreManager BBScoreManager = FindObjectOfType<BreakBreakScoreManager>();
-                if(BBScoreManager != null)
-                {
-                    BBScoreManager.SendMessage("SaveScore");             // 게임 오버일 때 점수 저장 하도록 메시지 전달
-                }
+                SetGameOver();
             }
             else
             {
@@ -35,5 +28,17 @@ public class BBGameManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+    }
+
+    public void SetGameOver()
+    {
+        _isGameOver = true;
+        Time.timeScale = 0f;
+        BreakBreakScoreManager BBScoreManager = FindObjectOfType<BreakBreakScoreManager>();
+        if (BBScoreManager != null)
+        {
+            BBScoreManager.SendMessage("SaveScore");             // 게임 오버일 때 점수 저장 하도록 메시지 전달
+        }
+        Debug.Log("게임 오버");
     }
 }

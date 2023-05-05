@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BBCreateItem : MonoBehaviour
 {
+    static bool _itemSkipLine;
     Transform[] _blocks;
     bool _isCreating;
 
@@ -20,6 +21,12 @@ public class BBCreateItem : MonoBehaviour
             }
             _blocks[index] = tempArray[i];
             index++;                                       // 최소 1회는 continue가 실행되여 index가 i보다 1 더 작음
+        }
+
+        if (_itemSkipLine == false)
+        {
+            _itemSkipLine = true;
+            return;
         }
 
         CreateStar();

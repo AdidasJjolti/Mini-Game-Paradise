@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] GameObject _rTrigger;
     [SerializeField] float _speed;
     bool _isGrounded;
+    [SerializeField] SpriteRenderer _renderer;
 
     void Awake()
     {
@@ -25,6 +26,7 @@ public class PlayerControl : MonoBehaviour
         //Debug.Log("Player velocity is " + _rigid.velocity);
         if (_isLeftMoving == false)
         {
+            _renderer.flipX = false;
             _rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Impulse);
             if (_rigid.velocity.x > _speed)
             {
@@ -33,6 +35,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
+            _renderer.flipX = true;
             _rigid.AddForce(Vector2.right * _speed * -1 * Time.deltaTime, ForceMode2D.Impulse);
             if (_rigid.velocity.x < _speed * -1)
             {
@@ -75,5 +78,10 @@ public class PlayerControl : MonoBehaviour
     public bool GetLeftMoving()
     {
         return _isLeftMoving;
+    }
+
+    public void SetLeftMoving(bool direction)
+    {
+        _isLeftMoving = direction;
     }
 }
