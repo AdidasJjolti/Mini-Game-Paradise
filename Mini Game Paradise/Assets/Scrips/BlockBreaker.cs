@@ -61,9 +61,9 @@ public class BlockBreaker : MonoBehaviour, ISubject
         {
             if (collision.transform.CompareTag("Line") && _playerControl.GetGrounded())          // Line 태그에 닿았고 플레이어가 땅에 닿은 상태일 때 실행
             {
-                _playerRigidbody2D.velocity = new Vector2(0.5f, _playerRigidbody2D.velocity.y);
+                _playerRigidbody2D.velocity = new Vector2(1f, _playerRigidbody2D.velocity.y);
                 collision.GetComponent<SpriteRenderer>().enabled = false;
-                collision.GetComponent<BoxCollider2D>().isTrigger = true;
+                collision.GetComponent<Collider2D>().isTrigger = true;
                 StartCoroutine("SetPlayerState");
             }
         }

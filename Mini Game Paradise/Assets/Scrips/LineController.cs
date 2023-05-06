@@ -16,7 +16,7 @@ public class LineController : MonoBehaviour
 
             collision.transform.position = new Vector3 (collision.transform.position.x, _lineResetter.position.y, 0);
             collision.GetComponent<SpriteRenderer>().enabled = true;
-            collision.GetComponent<BoxCollider2D>().isTrigger = false;
+            collision.GetComponent<Collider2D>().isTrigger = false;
             if (_parent == collision.transform.parent)
             {
                 return;

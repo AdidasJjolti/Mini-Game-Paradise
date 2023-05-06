@@ -12,7 +12,10 @@ public class BBCreateFriend : MonoBehaviour
 
     void Awake()
     {
-        _friendPool = FindObjectOfType<BBFriendPool>();
+        if(_friendPool == null)
+        {
+            _friendPool = FindObjectOfType<BBFriendPool>();
+        }
 
         var tempArray = transform.GetComponentsInChildren<Transform>();
         _blocks = new Transform[tempArray.Length - 1];     // 나 자신을 제외한 임시 배열의 길이 - 1만큼 _blocks 배열의 크기가 결정됨
@@ -52,7 +55,7 @@ public class BBCreateFriend : MonoBehaviour
 
         // 친구 생성 확률 66%로 설정
         float chance = Random.Range(0f, 1f);
-        if (chance > 0.66f)
+        if (chance > 1f)
         {
             _isCreating = false;
             yield break;

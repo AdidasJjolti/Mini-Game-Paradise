@@ -81,6 +81,11 @@ public class BBFriendStates : MonoBehaviour
     {
         if(collision.CompareTag("upperTrigger"))
         {
+            if(_friendPool == null)
+            {
+                Destroy(gameObject);
+                return;
+            }
             _friendPool.PoolIn(gameObject, _friendType);
             Debug.Log("친구가 없어지지롱");
         }
