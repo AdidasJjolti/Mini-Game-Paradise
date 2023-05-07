@@ -55,7 +55,7 @@ public class BBCreateFriend : MonoBehaviour
 
         // 친구 생성 확률 66%로 설정
         float chance = Random.Range(0f, 1f);
-        if (chance > 1f)
+        if (chance > 0.66f)
         {
             _isCreating = false;
             yield break;
@@ -86,7 +86,7 @@ public class BBCreateFriend : MonoBehaviour
         if (obj != null)
         {
             GameObject ob = obj;
-            ob.transform.parent = _blocks[index];
+            //ob.transform.parent = _blocks[index];
             ob.transform.position = _blocks[index].position + new Vector3(0, 0.5f, 0);
             Debug.Log($"block : {_blocks[index].position}, obj : {ob.transform.position}");
             if(index >= _blocks.Length/2)           // 오른쪽 블럭에서 생성되면 우측 이동, 왼쪽 블럭에서 생성되면 좌측 이동으로 설정
@@ -97,7 +97,6 @@ public class BBCreateFriend : MonoBehaviour
             {
                 ob.GetComponent<BBFriendStates>().SetLeftMoving(true);
             }
-
         }
         else
         {

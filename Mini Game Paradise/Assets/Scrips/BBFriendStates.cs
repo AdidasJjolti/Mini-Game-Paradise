@@ -16,9 +16,10 @@ public enum _eFriendType
 public class BBFriendStates : MonoBehaviour
 {
     Rigidbody2D _rigid;
-    bool _isLeftMoving;
-    bool _ableMoving;                // 카메라 안으로 들어올 때부터 움직이기 시작, 생성되자마자 움직여서 떨어지는 것을 방지
-    bool _isStunned;
+    [SerializeField] bool _isLeftMoving;
+    [SerializeField] bool _ableMoving;                // 카메라 안으로 들어올 때부터 움직이기 시작, 생성되자마자 움직여서 떨어지는 것을 방지
+    [SerializeField] bool _isStunned;
+    bool _isGrounded;
     [SerializeField] float _stunTime;
     [SerializeField] float _speed;
     SpriteRenderer _renderer;
@@ -43,12 +44,11 @@ public class BBFriendStates : MonoBehaviour
         if (_isLeftMoving == false)
         {
             _renderer.flipX = false;
-
-            if(_ableMoving == false)
+            if (_ableMoving == false)
             {
+                _rigid.velocity = new Vector2(0, 0);
                 return;
             }
-
             _rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Impulse);
             if (_rigid.velocity.x > _speed)
             {
@@ -58,12 +58,11 @@ public class BBFriendStates : MonoBehaviour
         else
         {
             _renderer.flipX = true;
-
             if (_ableMoving == false)
             {
+                _rigid.velocity = new Vector2(0, 0);
                 return;
             }
-
             _rigid.AddForce(Vector2.right * _speed * -1 * Time.deltaTime, ForceMode2D.Impulse);
             if (_rigid.velocity.x < _speed * -1)
             {
@@ -107,7 +106,7 @@ public class BBFriendStates : MonoBehaviour
             // 플레이어의 충돌 y좌표가 친구 y좌표보다 높으면 친구는 스턴 상태
             if((collision.transform.position.y - transform.position.y) > 0.7f)
             {
-                // 친구와 충돌 시 오른쪽에서 발생하면 플레이어 이동 방향을 우측, 왼족에서 발생하면 플레이어 이동 방향을 좌측 설정
+                // 친구와 충돌 시 오른쪽에서 발생하면 플레이어 이동 방향을 우측, 왼쪽에서 발생하면 플레이어 이동 방향을 좌측 설정
                 if(collision.transform.position.x > transform.position.x)
                 {
                     collision.gameObject.GetComponent<PlayerControl>().SetLeftMoving(false);
@@ -126,6 +125,23 @@ public class BBFriendStates : MonoBehaviour
                     BBGameManager.SetGameOver();
                 }
             }
+        }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Line"))
+        {
+            _isGrounded = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Line"))
+        {
+            _rigid.velocity = new Vector2(1f, _rigid.velocity.y);
+            _isGrounded = false;
         }
     }
 
@@ -150,5 +166,6 @@ public class BBFriendStates : MonoBehaviour
         _isStunned = false;
         _ableMoving = true;
         _renderer.flipY = false;
+        Physics2D.IgnoreCollision(_collider, collision.gameObject.GetComponent<Collider2D>(),false);
     }
 }

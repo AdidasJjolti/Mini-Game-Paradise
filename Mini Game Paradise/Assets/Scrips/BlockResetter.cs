@@ -20,15 +20,15 @@ public class BlockResetter : MonoBehaviour
                 collision.transform.position += new Vector3(8, 0, 0);
             }
         }
-        else if(collision.CompareTag("Friend"))
+        else if (collision.CompareTag("Friend"))
         {
             if (transform.name.Equals("RightTrigger"))
             {
-                collision.transform.position = new Vector3(_player.transform.position.x - 2f, collision.transform.position.y, collision.transform.position.z);
+                collision.transform.position -= new Vector3(7, 0, 0);
             }
             else if (transform.name.Equals("LeftTrigger"))
             {
-                collision.transform.position = new Vector3(_player.transform.position.x + 2f, collision.transform.position.y, collision.transform.position.z);
+                collision.transform.position += new Vector3(7, 0, 0);
             }
         }
     }

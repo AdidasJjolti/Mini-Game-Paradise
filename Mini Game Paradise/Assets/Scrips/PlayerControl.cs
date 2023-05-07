@@ -6,8 +6,6 @@ public class PlayerControl : MonoBehaviour
 {
     Rigidbody2D _rigid;
     bool _isLeftMoving;
-    //[SerializeField] GameObject _lTrigger;
-    //[SerializeField] GameObject _rTrigger;
     [SerializeField] float _speed;
     bool _isGrounded;
     [SerializeField] SpriteRenderer _renderer;
@@ -16,21 +14,15 @@ public class PlayerControl : MonoBehaviour
     {
         _rigid = GetComponent<Rigidbody2D>();
         _isLeftMoving = false;
-        //_lTrigger.SetActive(!_isLeftMoving);
-        //_rTrigger.SetActive(_isLeftMoving);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Player velocity is " + _rigid.velocity);
+        //Debug.Log("Player velocity is " + _rigid.velocity);
         if (_isLeftMoving == false)
         {
             _renderer.flipX = false;
-            //_lTrigger.SetActive(!_isLeftMoving);
-            //_rTrigger.SetActive(_isLeftMoving);
-
-            //_rigid.velocity = new Vector2(_speed * Time.deltaTime, _rigid.velocity.y);
             _rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Force);
             if (_rigid.velocity.x > _speed)
             {
@@ -40,10 +32,6 @@ public class PlayerControl : MonoBehaviour
         else
         {
             _renderer.flipX = true;
-            //_lTrigger.SetActive(!_isLeftMoving);
-            //_rTrigger.SetActive(_isLeftMoving);
-
-            //_rigid.velocity = new Vector2(-1 * _speed * Time.deltaTime, _rigid.velocity.y);
             _rigid.AddForce(Vector2.right * _speed * -1 * Time.deltaTime, ForceMode2D.Force);
             if (_rigid.velocity.x < _speed * -1)
             {

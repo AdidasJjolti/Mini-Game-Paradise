@@ -5,19 +5,7 @@ using UnityEngine;
 public class BlockCreator : MonoBehaviour
 {
     [SerializeField] GameObject[] _blockPrefabs;
-
     public int _blockCount;
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void CreateBlock(Vector2 blockPosition)
     {
