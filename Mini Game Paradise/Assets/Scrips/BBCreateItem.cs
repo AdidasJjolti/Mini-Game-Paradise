@@ -98,11 +98,11 @@ public class BBCreateItem : MonoBehaviour
             GameObject ob = obj;
             ob.transform.parent = _blocks[index];
             ob.transform.position = _blocks[index].position + new Vector3(0, 0.5f, 0);
-            Debug.Log($"block : {_blocks[index].position}, obj : {ob.transform.position}");
+            //Debug.Log($"block : {_blocks[index].position}, obj : {ob.transform.position}");
         }
         else
         {
-            Debug.LogError($"failed : {type.ToString()} / obj : {obj}");
+            //Debug.LogError($"failed : {type.ToString()} / obj : {obj}");
         }
 
         _isCreating = false;

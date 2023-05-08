@@ -42,7 +42,7 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
         {
             case "BlockBreaker":
                 _curScore += 100;
-                Debug.Log("Current Score is " + _curScore);
+                //Debug.Log("Current Score is " + _curScore);
                 break;
         }
 
@@ -61,41 +61,41 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
         {
             case _eItemType.YELLOW_SINGLE:
                 _curScore += 10;
-                Debug.Log("Current Score is " + _curScore);
+                //Debug.Log("Current Score is " + _curScore);
                 break;
             case _eItemType.ORANGE_SINGLE:
                 _curScore += 10;
-                Debug.Log("Current Score is " + _curScore);
+                //Debug.Log("Current Score is " + _curScore);
                 break;
             case _eItemType.GREEN_SINGLE:
                 _curScore += 10;
-                Debug.Log("Current Score is " + _curScore);
+                //Debug.Log("Current Score is " + _curScore);
                 break;
 
             case _eItemType.YELLOW_DOUBLE:
                 _curScore += 20;
-                Debug.Log("Current Score is " + _curScore);
+                //Debug.Log("Current Score is " + _curScore);
                 break;
             case _eItemType.ORANGE_DOUBLE:
                 _curScore += 20;
-                Debug.Log("Current Score is " + _curScore);
+                //Debug.Log("Current Score is " + _curScore);
                 break;
             case _eItemType.GREEN_DOUBLE:
                 _curScore += 20;
-                Debug.Log("Current Score is " + _curScore);
+               // Debug.Log("Current Score is " + _curScore);
                 break;
 
             case _eItemType.YELLOW_TRIPLE:
                 _curScore += 30;
-                Debug.Log("Current Score is " + _curScore);
+                //Debug.Log("Current Score is " + _curScore);
                 break;
             case _eItemType.ORANGE_TRIPLE:
                 _curScore += 30;
-                Debug.Log("Current Score is " + _curScore);
+                //Debug.Log("Current Score is " + _curScore);
                 break;
             case _eItemType.GREEN_TRIPLE:
                 _curScore += 30;
-                Debug.Log("Current Score is " + _curScore);
+                //Debug.Log("Current Score is " + _curScore);
                 break;
         }
 
@@ -122,7 +122,7 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
         if(_isScoreRenewed)
         {
             PlayerPrefs.SetInt("BB_bestScore", _curScore);
-            Debug.Log("±â·Ï ¹Ù²ñ");
+            //Debug.Log("±â·Ï ¹Ù²ñ");
         }
     }
 }

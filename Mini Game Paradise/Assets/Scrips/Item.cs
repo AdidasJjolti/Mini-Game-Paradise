@@ -39,7 +39,7 @@ public class Item : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            Debug.Log("Got It!");
+            //Debug.Log("Got It!");
             _scoreManager.SendMessage("ItemScoreUpdate", _itemType);
             ItemPool.Instance.PoolIn(gameObject, _itemType);
         }
@@ -47,7 +47,7 @@ public class Item : MonoBehaviour
         if(collision.CompareTag("upperTrigger"))
         {
             ItemPool.Instance.PoolIn(gameObject, _itemType);
-            Debug.Log("아이템이 없어지지롱");
+            //Debug.Log("아이템이 없어지지롱");
         }
     }
 

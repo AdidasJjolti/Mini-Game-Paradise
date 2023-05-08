@@ -70,7 +70,7 @@ public class BBFriendPool : MonoBehaviour
         // 딕셔너리가 있지만 키 값이 잘못된 경우
         if (_bbFriendPool.ContainsKey(key) == false)
         {
-            Debug.LogError("Invalid Key");
+            //Debug.LogError("Invalid Key");
             return null;
         }
 
@@ -78,7 +78,7 @@ public class BBFriendPool : MonoBehaviour
         _bbFriendPool.TryGetValue(key, out var list);
         if (list == null)
         {
-            Debug.LogError("Invalid List");
+            //Debug.LogError("Invalid List");
             return null;
         }
 

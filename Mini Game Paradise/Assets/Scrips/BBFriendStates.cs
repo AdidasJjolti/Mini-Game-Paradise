@@ -52,7 +52,7 @@ public class BBFriendStates : MonoBehaviour
             _rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Impulse);
             if (_rigid.velocity.x > _speed)
             {
-                _rigid.velocity = new Vector2(_speed, _rigid.velocity.y);
+                _rigid.velocity = new Vector2(_speed * Time.deltaTime, _rigid.velocity.y);
             }
         }
         else
@@ -63,17 +63,17 @@ public class BBFriendStates : MonoBehaviour
                 _rigid.velocity = new Vector2(0, 0);
                 return;
             }
-            _rigid.AddForce(Vector2.right * _speed * -1 * Time.deltaTime, ForceMode2D.Impulse);
+            _rigid.AddForce(Vector2.left * _speed * Time.deltaTime, ForceMode2D.Impulse);
             if (_rigid.velocity.x < _speed * -1)
             {
-                _rigid.velocity = new Vector2(_speed * -1, _rigid.velocity.y);
+                _rigid.velocity = new Vector2(-1 * _speed * Time.deltaTime, _rigid.velocity.y);
             }
         }
     }
 
     void OnDisable()
     {
-        Debug.Log("친구 사라짐");
+        //Debug.Log("친구 사라짐");
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -86,12 +86,12 @@ public class BBFriendStates : MonoBehaviour
                 return;
             }
             _friendPool.PoolIn(gameObject, _friendType);
-            Debug.Log("친구가 없어지지롱");
+            //Debug.Log("친구가 없어지지롱");
         }
         else if(collision.CompareTag("CameraTrigger"))
         {
             _ableMoving = true;
-            Debug.Log("친구가 움직일 수 있지롱");
+            //Debug.Log("친구가 움직일 수 있지롱");
         }
     }
 
@@ -140,9 +140,25 @@ public class BBFriendStates : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Line"))
         {
-            _rigid.velocity = new Vector2(1f, _rigid.velocity.y);
-            _isGrounded = false;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 1f);
+            if(hit.collider == null)
+            {
+                if(this.GetLeftMoving() == false)
+                {
+                    _rigid.velocity = new Vector2(1f, _rigid.velocity.y);
+                }
+                else
+                {
+                    _rigid.velocity = new Vector2(1f, _rigid.velocity.y);
+                }
+                _isGrounded = false;
+            }
         }
+    }
+
+    public bool GetLeftMoving()
+    {
+        return _isLeftMoving;
     }
 
     public void SetLeftMoving(bool _leftMove)

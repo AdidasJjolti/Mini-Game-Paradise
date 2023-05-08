@@ -12,7 +12,7 @@ public class LineController : MonoBehaviour
     {
         if(collision.CompareTag("Line") && _playerControl.GetGrounded() == true)
         {
-            Debug.Log("줄이 바뀌지롱");
+            //Debug.Log("줄이 바뀌지롱");
 
             collision.transform.position = new Vector3 (collision.transform.position.x, _lineResetter.position.y, 0);
             collision.GetComponent<SpriteRenderer>().enabled = true;
@@ -23,9 +23,9 @@ public class LineController : MonoBehaviour
             }
             _parent = collision.transform.parent;
             _parent.GetComponent<BBCreateItem>().CreateStar();
-            Debug.Log("아이템이 다시 생겼지롱");
+            //Debug.Log("아이템이 다시 생겼지롱");
             _parent.GetComponent<BBCreateFriend>().CreateFriend();
-            Debug.Log("친구가 다시 생겼지롱");
+            //Debug.Log("친구가 다시 생겼지롱");
         }
     }
 }

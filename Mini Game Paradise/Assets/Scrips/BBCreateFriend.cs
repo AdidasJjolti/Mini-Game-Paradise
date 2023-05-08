@@ -86,9 +86,10 @@ public class BBCreateFriend : MonoBehaviour
         if (obj != null)
         {
             GameObject ob = obj;
+            Debug.Log(ob.transform.name + "'s instanceID is " + ob.GetInstanceID());
             //ob.transform.parent = _blocks[index];
             ob.transform.position = _blocks[index].position + new Vector3(0, 0.5f, 0);
-            Debug.Log($"block : {_blocks[index].position}, obj : {ob.transform.position}");
+            //Debug.Log($"block : {_blocks[index].position}, obj : {ob.transform.position}");
             if(index >= _blocks.Length/2)           // 오른쪽 블럭에서 생성되면 우측 이동, 왼쪽 블럭에서 생성되면 좌측 이동으로 설정
             {
                 ob.GetComponent<BBFriendStates>().SetLeftMoving(false);
@@ -100,7 +101,7 @@ public class BBCreateFriend : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"failed : {type.ToString()} / obj : {obj}");
+            //Debug.LogError($"failed : {type.ToString()} / obj : {obj}");
         }
 
         _isCreating = false;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     Rigidbody2D _rigid;
-    bool _isLeftMoving;
+    [SerializeField] bool _isLeftMoving;
     [SerializeField] float _speed;
     bool _isGrounded;
     [SerializeField] SpriteRenderer _renderer;
@@ -57,7 +57,7 @@ public class PlayerControl : MonoBehaviour
 
     public void SetGrounded(bool isGrounded)
     {
-        Debug.Log("¶¥¿¡¼­ ¶³¾îÁü");
+        //Debug.Log("¶¥¿¡¼­ ¶³¾îÁü");
         _isGrounded = isGrounded;
     }
 
