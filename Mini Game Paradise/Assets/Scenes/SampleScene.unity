@@ -345,7 +345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f9908bd3e030c41b1ef0fae548eccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 3
+  _isLeftMoving: 0
+  _speed: 2
   _renderer: {fileID: 590390873}
 --- !u!58 &119013426
 CircleCollider2D:
@@ -634,7 +635,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 80}
+  m_Size: {x: 1.4, y: 80}
   m_EdgeRadius: 0
 --- !u!114 &347051501
 MonoBehaviour:
@@ -706,7 +707,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 80}
+  m_Size: {x: 1.4, y: 80}
   m_EdgeRadius: 0
 --- !u!114 &464375359
 MonoBehaviour:

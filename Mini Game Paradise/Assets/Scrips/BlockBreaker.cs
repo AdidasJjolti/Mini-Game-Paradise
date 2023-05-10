@@ -63,11 +63,11 @@ public class BlockBreaker : MonoBehaviour, ISubject
             {
                 if(_playerControl.GetLeftMoving() == false)
                 {
-                    _playerRigidbody2D.velocity = new Vector2(1f, _playerRigidbody2D.velocity.y);
+                    _playerRigidbody2D.velocity = new Vector2(0.5f, _playerRigidbody2D.velocity.y);
                 }
                 else
                 {
-                    _playerRigidbody2D.velocity = new Vector2(-1f, _playerRigidbody2D.velocity.y);
+                    _playerRigidbody2D.velocity = new Vector2(-0.5f, _playerRigidbody2D.velocity.y);
                 }
                 collision.GetComponent<SpriteRenderer>().enabled = false;
                 collision.GetComponent<Collider2D>().isTrigger = true;

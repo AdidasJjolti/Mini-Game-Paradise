@@ -41,33 +41,40 @@ public class BBFriendStates : MonoBehaviour
 
     void Update()
     {
+        if(_isStunned)
+        {
+            return;
+        }
+
         if (_isLeftMoving == false)
         {
             _renderer.flipX = false;
-            if (_ableMoving == false)
-            {
-                _rigid.velocity = new Vector2(0, 0);
-                return;
-            }
-            _rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Impulse);
-            if (_rigid.velocity.x > _speed)
-            {
-                _rigid.velocity = new Vector2(_speed * Time.deltaTime, _rigid.velocity.y);
-            }
+            //if (_ableMoving == false)
+            //{
+            //    _rigid.velocity = new Vector2(0, 0);
+            //    return;
+            //}
+            gameObject.transform.Translate(Vector2.right * _speed * Time.deltaTime);
+            //_rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Impulse);
+            //if (_rigid.velocity.x > _speed)
+            //{
+            //    _rigid.velocity = new Vector2(_speed * Time.deltaTime, _rigid.velocity.y);
+            //}
         }
         else
         {
             _renderer.flipX = true;
-            if (_ableMoving == false)
-            {
-                _rigid.velocity = new Vector2(0, 0);
-                return;
-            }
-            _rigid.AddForce(Vector2.left * _speed * Time.deltaTime, ForceMode2D.Impulse);
-            if (_rigid.velocity.x < _speed * -1)
-            {
-                _rigid.velocity = new Vector2(-1 * _speed * Time.deltaTime, _rigid.velocity.y);
-            }
+            //if (_ableMoving == false)
+            //{
+            //    _rigid.velocity = new Vector2(0, 0);
+            //    return;
+            //}
+            gameObject.transform.Translate(Vector2.left * _speed * Time.deltaTime);
+            //_rigid.AddForce(Vector2.left * _speed * Time.deltaTime, ForceMode2D.Impulse);
+            //if (_rigid.velocity.x < _speed * -1)
+            //{
+            //    _rigid.velocity = new Vector2(-1 * _speed * Time.deltaTime, _rigid.velocity.y);
+            //}
         }
     }
 
@@ -136,25 +143,25 @@ public class BBFriendStates : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Line"))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 1f);
-            if(hit.collider == null)
-            {
-                if(this.GetLeftMoving() == false)
-                {
-                    _rigid.velocity = new Vector2(1f, _rigid.velocity.y);
-                }
-                else
-                {
-                    _rigid.velocity = new Vector2(1f, _rigid.velocity.y);
-                }
-                _isGrounded = false;
-            }
-        }
-    }
+    //void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Line"))
+    //    {
+    //        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 1f);
+    //        if(hit.collider == null)
+    //        {
+    //            if(this.GetLeftMoving() == false)
+    //            {
+    //                _rigid.velocity = new Vector2(1f, _rigid.velocity.y);
+    //            }
+    //            else
+    //            {
+    //                _rigid.velocity = new Vector2(1f, _rigid.velocity.y);
+    //            }
+    //            _isGrounded = false;
+    //        }
+    //    }
+    //}
 
     public bool GetLeftMoving()
     {
@@ -176,6 +183,7 @@ public class BBFriendStates : MonoBehaviour
 
         _isStunned = true;
         _ableMoving = false;
+        _rigid.velocity = Vector2.zero;
         _renderer.flipY = true;
         Physics2D.IgnoreCollision(_collider, collision.gameObject.GetComponent<Collider2D>());
         yield return new WaitForSecondsRealtime(_stunTime);

@@ -103,8 +103,8 @@ MonoBehaviour:
   _isLeftMoving: 0
   _ableMoving: 0
   _isStunned: 0
-  _stunTime: 3
-  _speed: 2.5
+  _stunTime: 10
+  _speed: 1
   _friendType: 0
 --- !u!50 &425208667202431310
 Rigidbody2D:

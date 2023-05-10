@@ -23,20 +23,22 @@ public class PlayerControl : MonoBehaviour
         if (_isLeftMoving == false)
         {
             _renderer.flipX = false;
-            _rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Force);
-            if (_rigid.velocity.x > _speed)
-            {
-                _rigid.velocity = new Vector2(_speed, _rigid.velocity.y);
-            }
+            gameObject.transform.Translate(Vector2.right * _speed * Time.deltaTime);
+            //_rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Force);
+            //if (_rigid.velocity.x > _speed)
+            //{
+            //    _rigid.velocity = new Vector2(_speed, _rigid.velocity.y);
+            //}
         }
         else
         {
             _renderer.flipX = true;
-            _rigid.AddForce(Vector2.right * _speed * -1 * Time.deltaTime, ForceMode2D.Force);
-            if (_rigid.velocity.x < _speed * -1)
-            {
-                _rigid.velocity = new Vector2(-1 * _speed, _rigid.velocity.y);
-            }
+            gameObject.transform.Translate(Vector2.left * _speed * Time.deltaTime);
+            //_rigid.AddForce(Vector2.right * _speed * -1 * Time.deltaTime, ForceMode2D.Force);
+            //if (_rigid.velocity.x < _speed * -1)
+            //{
+            //    _rigid.velocity = new Vector2(-1 * _speed, _rigid.velocity.y);
+            //}
         }
     }
 
