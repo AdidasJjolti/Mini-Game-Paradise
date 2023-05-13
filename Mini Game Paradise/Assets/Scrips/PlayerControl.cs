@@ -7,7 +7,7 @@ public class PlayerControl : MonoBehaviour
     Rigidbody2D _rigid;
     [SerializeField] bool _isLeftMoving;
     [SerializeField] float _speed;
-    bool _isGrounded;
+    [SerializeField] bool _isGrounded;
     [SerializeField] SpriteRenderer _renderer;
 
     void Awake()
@@ -19,48 +19,53 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector3.down, 1f);
+        Debug.DrawRay(transform.position, Vector3.down, Color.red);
+        foreach (var hit in hits)
+        {
+            _isGrounded = false;
+
+            if (hit.transform.CompareTag("Line"))
+            {
+                _isGrounded = true;
+                Debug.Log("<color=green>_isGrounded = true</color>");
+                break;
+            }
+        }
+
+        if(_isGrounded == false)
+        {
+            Debug.Log("<color=red>_isGrounded = false</color>");
+        }
+
         //Debug.Log("Player velocity is " + _rigid.velocity);
         if (_isLeftMoving == false)
         {
             _renderer.flipX = false;
             gameObject.transform.Translate(Vector2.right * _speed * Time.deltaTime);
-            //_rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Force);
-            //if (_rigid.velocity.x > _speed)
-            //{
-            //    _rigid.velocity = new Vector2(_speed, _rigid.velocity.y);
-            //}
         }
         else
         {
             _renderer.flipX = true;
             gameObject.transform.Translate(Vector2.left * _speed * Time.deltaTime);
-            //_rigid.AddForce(Vector2.right * _speed * -1 * Time.deltaTime, ForceMode2D.Force);
-            //if (_rigid.velocity.x < _speed * -1)
-            //{
-            //    _rigid.velocity = new Vector2(-1 * _speed, _rigid.velocity.y);
-            //}
         }
+
+        Debug.Log($"_rigid.velocity.x = { _rigid.velocity.x}");
     }
 
     // ÇÃ·¹ÀÌ¾î°¡ ¶¥¿¡ ´ê¾Æ ÀÖ´Â »óÅÂ¸é true, ¾Æ´Ï¸é false
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if(collision.gameObject.CompareTag("Line"))
-        {
-            //Debug.Log("¶¥¿¡ ´êÀ½");
-            _isGrounded = true;
-        }
-    }
+    //void OnCollisionStay2D(Collision2D collision)
+    //{
+    //    if(collision.gameObject.CompareTag("Line"))
+    //    {
+    //        //Debug.Log("¶¥¿¡ ´êÀ½");
+    //        _isGrounded = true;
+    //    }
+    //}
 
     public bool GetGrounded()
     {
         return _isGrounded;
-    }
-
-    public void SetGrounded(bool isGrounded)
-    {
-        //Debug.Log("¶¥¿¡¼­ ¶³¾îÁü");
-        _isGrounded = isGrounded;
     }
 
     // ÇÃ·¹ÀÌ¾îÀÇ ÀÌµ¿ ¹æÇâÀÌ ¿ÞÂÊÀÎÁö ¾Æ´ÑÁö ¹ÝÈ¯

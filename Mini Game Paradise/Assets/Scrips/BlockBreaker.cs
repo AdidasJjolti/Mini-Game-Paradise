@@ -19,7 +19,7 @@ public class BlockBreaker : MonoBehaviour, ISubject
     [SerializeField] CapsuleCollider2D _playerCollider;
     [SerializeField] Rigidbody2D _playerRigidbody2D;
     [SerializeField] PlayerControl _playerControl;
-    bool _isClicked;
+    [SerializeField] bool _isClicked;
 
 
     void Awake()
@@ -35,6 +35,7 @@ public class BlockBreaker : MonoBehaviour, ISubject
         {
             _isClicked = true;
         }
+        Debug.Log($"<color=aqua>_isClicked = {_isClicked}</color>");
     }
 
     public void RegisterObserver(IObserver observer)
@@ -59,29 +60,44 @@ public class BlockBreaker : MonoBehaviour, ISubject
     {
         if(_isClicked == true)
         {
+            Debug.Log("땅 뚫었음");
             if (collision.transform.CompareTag("Line") && _playerControl.GetGrounded())          // Line 태그에 닿았고 플레이어가 땅에 닿은 상태일 때 실행
             {
                 if(_playerControl.GetLeftMoving() == false)
                 {
-                    _playerRigidbody2D.velocity = new Vector2(0.5f, _playerRigidbody2D.velocity.y);
+                    _playerControl.transform.Translate(Vector2.down * .5f * Time.deltaTime);
                 }
                 else
                 {
-                    _playerRigidbody2D.velocity = new Vector2(-0.5f, _playerRigidbody2D.velocity.y);
+                    _playerControl.transform.Translate(Vector2.down * .5f * Time.deltaTime);
                 }
                 collision.GetComponent<SpriteRenderer>().enabled = false;
                 collision.GetComponent<Collider2D>().isTrigger = true;
                 StartCoroutine("SetPlayerState");
             }
         }
+
+        if (collision.CompareTag("Line"))
+        {
+            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, Vector3.down, 0.1f);
+            Debug.DrawRay(transform.position, Vector3.down, Color.green, 2f);
+            foreach (var item in hit)
+            {
+                if (item.transform.CompareTag("Line"))
+                {
+                    _playerCollider.isTrigger = false;
+                    _isClicked = false;
+                }
+            }
+        }
     }
 
-
+    // _isGrounded = false 상태에서 땅에 닿을 때 실행
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Line"))
         {
-            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, Vector3.down, 1f);
+            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, Vector3.down, 0.1f);
             Debug.DrawRay(transform.position, Vector3.down, Color.green, 2f);
             foreach (var item in hit)
             {
@@ -106,7 +122,7 @@ public class BlockBreaker : MonoBehaviour, ISubject
         onCoroutine = true;
 
         yield return new WaitForEndOfFrame();
-        _playerControl.SetGrounded(false);
+        //_playerControl.SetGrounded(false);
         onCoroutine = false;
         NotifyObservers();
     }
