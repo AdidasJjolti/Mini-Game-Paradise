@@ -105,6 +105,7 @@ MonoBehaviour:
   _isStunned: 0
   _stunTime: 10
   _speed: 1
+  _knockbackPower: 2
   _friendType: 2
 --- !u!50 &1506861209667295193
 Rigidbody2D:

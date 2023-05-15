@@ -50,7 +50,7 @@ public class PlayerControl : MonoBehaviour
             gameObject.transform.Translate(Vector2.left * _speed * Time.deltaTime);
         }
 
-        Debug.Log($"_rigid.velocity.x = { _rigid.velocity.x}");
+        //Debug.Log($"_rigid.velocity.x = { _rigid.velocity.x}");
     }
 
     // 플레이어가 땅에 닿아 있는 상태면 true, 아니면 false

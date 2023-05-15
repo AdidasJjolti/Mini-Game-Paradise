@@ -55,7 +55,7 @@ public class BBCreateFriend : MonoBehaviour
 
         // 친구 생성 확률 66%로 설정
         float chance = Random.Range(0f, 1f);
-        if (chance >= 0.66f)
+        if (chance >= 0f)
         {
             _isCreating = false;
             yield break;

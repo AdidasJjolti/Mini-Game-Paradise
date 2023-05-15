@@ -347,6 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isLeftMoving: 0
   _speed: 2
+  _isGrounded: 0
   _renderer: {fileID: 590390873}
 --- !u!58 &119013426
 CircleCollider2D:
@@ -535,7 +536,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 642004474640350044, guid: a3fc1bbe46add0c46bedf1ab5f037865, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 642004474640350044, guid: a3fc1bbe46add0c46bedf1ab5f037865, type: 3}
       propertyPath: m_LocalPosition.x
@@ -891,6 +892,7 @@ MonoBehaviour:
   _playerCollider: {fileID: 119013423}
   _playerRigidbody2D: {fileID: 119013424}
   _playerControl: {fileID: 119013425}
+  _isClicked: 0
 --- !u!1 &590390871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,7 +1069,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &837636045
 MonoBehaviour:
@@ -2178,7 +2180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 642004474640350044, guid: a3fc1bbe46add0c46bedf1ab5f037865, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 642004474640350044, guid: a3fc1bbe46add0c46bedf1ab5f037865, type: 3}
       propertyPath: m_LocalPosition.x

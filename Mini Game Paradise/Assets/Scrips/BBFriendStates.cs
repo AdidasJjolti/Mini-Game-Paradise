@@ -15,17 +15,23 @@ public enum _eFriendType
 }
 public class BBFriendStates : MonoBehaviour
 {
-    Rigidbody2D _rigid;
+    // 친구 상태 관련 변수
     [SerializeField] bool _isLeftMoving;
     [SerializeField] bool _ableMoving;                // 카메라 안으로 들어올 때부터 움직이기 시작, 생성되자마자 움직여서 떨어지는 것을 방지
     [SerializeField] bool _isStunned;
     bool _isGrounded;
+
+    // 친구 상태 제어값
     [SerializeField] float _stunTime;
     [SerializeField] float _speed;
-    SpriteRenderer _renderer;
+    [SerializeField] float _knockbackPower;
+
     [SerializeField] _eFriendType _friendType;
+
     BBFriendPool _friendPool;
     Collider2D _collider;
+    Rigidbody2D _rigid;
+    SpriteRenderer _renderer;
 
     void Awake()
     {
@@ -49,32 +55,14 @@ public class BBFriendStates : MonoBehaviour
         if (_isLeftMoving == false)
         {
             _renderer.flipX = false;
-            //if (_ableMoving == false)
-            //{
-            //    _rigid.velocity = new Vector2(0, 0);
-            //    return;
-            //}
             gameObject.transform.Translate(Vector2.right * _speed * Time.deltaTime);
-            //_rigid.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Impulse);
-            //if (_rigid.velocity.x > _speed)
-            //{
-            //    _rigid.velocity = new Vector2(_speed * Time.deltaTime, _rigid.velocity.y);
-            //}
+            Debug.Log("******");
         }
         else
         {
             _renderer.flipX = true;
-            //if (_ableMoving == false)
-            //{
-            //    _rigid.velocity = new Vector2(0, 0);
-            //    return;
-            //}
             gameObject.transform.Translate(Vector2.left * _speed * Time.deltaTime);
-            //_rigid.AddForce(Vector2.left * _speed * Time.deltaTime, ForceMode2D.Impulse);
-            //if (_rigid.velocity.x < _speed * -1)
-            //{
-            //    _rigid.velocity = new Vector2(-1 * _speed * Time.deltaTime, _rigid.velocity.y);
-            //}
+            Debug.Log("******");
         }
     }
 
@@ -106,7 +94,7 @@ public class BBFriendStates : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Friend") && _isStunned == false)
         {
-            StartCoroutine(Stun(collision));
+            StartCoroutine(Stun(collision, true));
         }
         else if(collision.gameObject.CompareTag("Player") && _isStunned == false)
         {
@@ -122,7 +110,7 @@ public class BBFriendStates : MonoBehaviour
                 {
                     collision.gameObject.GetComponent<PlayerControl>().SetLeftMoving(true);
                 }
-                StartCoroutine(Stun(collision));
+                StartCoroutine(Stun(collision, false));
             }
             else
             {
@@ -143,26 +131,6 @@ public class BBFriendStates : MonoBehaviour
         }
     }
 
-    //void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Line"))
-    //    {
-    //        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, 1f);
-    //        if(hit.collider == null)
-    //        {
-    //            if(this.GetLeftMoving() == false)
-    //            {
-    //                _rigid.velocity = new Vector2(1f, _rigid.velocity.y);
-    //            }
-    //            else
-    //            {
-    //                _rigid.velocity = new Vector2(1f, _rigid.velocity.y);
-    //            }
-    //            _isGrounded = false;
-    //        }
-    //    }
-    //}
-
     public bool GetLeftMoving()
     {
         return _isLeftMoving;
@@ -174,7 +142,7 @@ public class BBFriendStates : MonoBehaviour
     }
 
     // 스턴 상태일 때 움직임을 멈추고 거꾸로 된 상태로 변경
-    IEnumerator Stun(Collision2D collision)
+    IEnumerator Stun(Collision2D collision, bool isFriend)
     {
         if(_isStunned == true)
         {
@@ -185,11 +153,52 @@ public class BBFriendStates : MonoBehaviour
         _ableMoving = false;
         _rigid.velocity = Vector2.zero;
         _renderer.flipY = true;
+        if(isFriend)
+        {
+            if(this.transform.position.x > collision.transform.position.x)
+            {
+                StartCoroutine(KnockBack(1)) ;
+            }
+            else
+            {
+                StartCoroutine(KnockBack(-1));
+            }
+            Debug.Log("Bang!!");
+        }
         Physics2D.IgnoreCollision(_collider, collision.gameObject.GetComponent<Collider2D>());
         yield return new WaitForSecondsRealtime(_stunTime);
         _isStunned = false;
         _ableMoving = true;
         _renderer.flipY = false;
         Physics2D.IgnoreCollision(_collider, collision.gameObject.GetComponent<Collider2D>(),false);
+    }
+
+    IEnumerator KnockBack(int dir)        // 넉백 방향을 dir으로 받아옴;  1이면 오른쪽, -1이면 왼쪽
+    {
+        float time = 0;
+        float duration = 0.5f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            _rigid.AddRelativeForce((transform.up * 2f + transform.right * dir) * _knockbackPower);
+        }
+
+        yield return new WaitForSecondsRealtime(duration);
+
+        _rigid.velocity = Vector2.zero;
+        Vector2 curPosition = transform.position;
+        time = 0;
+        duration = _stunTime - duration * 2;
+
+        while(time < duration)
+        {
+            //Debug.Log($"{transform.name}\tcurPosition is {curPosition}\ttransform.position is {transform.position}\tvelocity is {_rigid.velocity}");
+            time += Time.deltaTime;
+            transform.position = curPosition;
+            _rigid.velocity = Vector2.zero;
+        }
+
+        yield return 0;
     }
 }
