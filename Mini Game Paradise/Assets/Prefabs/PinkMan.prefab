@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 1506861209667295193}
   - component: {fileID: 1506861209667295194}
   - component: {fileID: 7811694683391259259}
-  m_Layer: 0
+  - component: {fileID: 7123219554808843868}
+  m_Layer: 7
   m_Name: PinkMan
   m_TagString: Friend
   m_Icon: {fileID: 0}
@@ -160,3 +161,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.03}
   serializedVersion: 2
   m_Radius: 0.13
+--- !u!95 &7123219554808843868
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506861209667295198}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 45885200054959d41a8c47c03675a0ac, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

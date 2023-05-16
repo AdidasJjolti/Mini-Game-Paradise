@@ -33,6 +33,8 @@ public class BBFriendStates : MonoBehaviour
     Rigidbody2D _rigid;
     SpriteRenderer _renderer;
 
+    Animator _animator;
+
     void Awake()
     {
         _friendPool = GetComponent<BBFriendPool>();
@@ -42,6 +44,9 @@ public class BBFriendStates : MonoBehaviour
         _isLeftMoving = false;
         _ableMoving = false;
         _isStunned = false;
+
+        _animator = GetComponent<Animator>();
+        _animator.SetBool("isStunned", false);
     }
 
 
@@ -56,13 +61,11 @@ public class BBFriendStates : MonoBehaviour
         {
             _renderer.flipX = false;
             gameObject.transform.Translate(Vector2.right * _speed * Time.deltaTime);
-            Debug.Log("******");
         }
         else
         {
             _renderer.flipX = true;
             gameObject.transform.Translate(Vector2.left * _speed * Time.deltaTime);
-            Debug.Log("******");
         }
     }
 
@@ -149,11 +152,15 @@ public class BBFriendStates : MonoBehaviour
             yield break;
         }
 
+        // 스턴 시 처리
         _isStunned = true;
         _ableMoving = false;
         _rigid.velocity = Vector2.zero;
         _renderer.flipY = true;
-        if(isFriend)
+        _animator.SetBool("isStunned", true);
+
+        // 친구와 충돌하여 스턴 시 넉백 처리 추가
+        if (isFriend)
         {
             if(this.transform.position.x > collision.transform.position.x)
             {
@@ -165,12 +172,16 @@ public class BBFriendStates : MonoBehaviour
             }
             Debug.Log("Bang!!");
         }
-        Physics2D.IgnoreCollision(_collider, collision.gameObject.GetComponent<Collider2D>());
+
+        Physics2D.IgnoreLayerCollision(7, 7, true);
         yield return new WaitForSecondsRealtime(_stunTime);
+
+        // 스턴 해제 후 원상 복귀
         _isStunned = false;
         _ableMoving = true;
         _renderer.flipY = false;
-        Physics2D.IgnoreCollision(_collider, collision.gameObject.GetComponent<Collider2D>(),false);
+        _animator.SetBool("isStunned", false);
+        Physics2D.IgnoreLayerCollision(7, 7, false);
     }
 
     IEnumerator KnockBack(int dir)        // 넉백 방향을 dir으로 받아옴;  1이면 오른쪽, -1이면 왼쪽
@@ -193,7 +204,6 @@ public class BBFriendStates : MonoBehaviour
 
         while(time < duration)
         {
-            //Debug.Log($"{transform.name}\tcurPosition is {curPosition}\ttransform.position is {transform.position}\tvelocity is {_rigid.velocity}");
             time += Time.deltaTime;
             transform.position = curPosition;
             _rigid.velocity = Vector2.zero;

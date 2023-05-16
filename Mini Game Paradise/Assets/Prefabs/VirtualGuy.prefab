@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 4171801275973056272}
   - component: {fileID: 4171801275973056273}
   - component: {fileID: 3834705979739068912}
-  m_Layer: 0
+  - component: {fileID: 5415659682609111797}
+  m_Layer: 7
   m_Name: VirtualGuy
   m_TagString: Friend
   m_Icon: {fileID: 0}
@@ -160,3 +161,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.03}
   serializedVersion: 2
   m_Radius: 0.13
+--- !u!95 &5415659682609111797
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4171801275973056269}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b6c2cf1f9c0465d4fab5541ac1907257, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
