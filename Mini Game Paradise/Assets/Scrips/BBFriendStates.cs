@@ -174,6 +174,7 @@ public class BBFriendStates : MonoBehaviour
         }
 
         Physics2D.IgnoreLayerCollision(7, 7, true);
+        Physics2D.IgnoreLayerCollision(7, 3, true);
         yield return new WaitForSecondsRealtime(_stunTime);
 
         // 스턴 해제 후 원상 복귀
@@ -182,6 +183,7 @@ public class BBFriendStates : MonoBehaviour
         _renderer.flipY = false;
         _animator.SetBool("isStunned", false);
         Physics2D.IgnoreLayerCollision(7, 7, false);
+        Physics2D.IgnoreLayerCollision(7, 3, false);
     }
 
     IEnumerator KnockBack(int dir)        // 넉백 방향을 dir으로 받아옴;  1이면 오른쪽, -1이면 왼쪽

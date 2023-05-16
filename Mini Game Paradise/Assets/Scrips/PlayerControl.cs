@@ -9,6 +9,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] float _speed;
     [SerializeField] bool _isGrounded;
     [SerializeField] SpriteRenderer _renderer;
+    [SerializeField] Animator _animator;
 
     void Awake()
     {
@@ -19,8 +20,8 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector3.down, 1f);
-        Debug.DrawRay(transform.position, Vector3.down, Color.red);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector3.down, 0.6f);
+        Debug.DrawRay(transform.position, Vector3.down * 0.6f, Color.red);
         foreach (var hit in hits)
         {
             _isGrounded = false;
@@ -33,7 +34,9 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        if(_isGrounded == false)
+        _animator.SetBool("isGrounded", _isGrounded);
+
+        if (_isGrounded == false)
         {
             Debug.Log("<color=red>_isGrounded = false</color>");
         }
@@ -56,7 +59,7 @@ public class PlayerControl : MonoBehaviour
     // 플레이어가 땅에 닿아 있는 상태면 true, 아니면 false
     //void OnCollisionStay2D(Collision2D collision)
     //{
-    //    if(collision.gameObject.CompareTag("Line"))
+    //    if (collision.gameObject.CompareTag("Line"))
     //    {
     //        //Debug.Log("땅에 닿음");
     //        _isGrounded = true;
@@ -77,5 +80,10 @@ public class PlayerControl : MonoBehaviour
     public void SetLeftMoving(bool direction)
     {
         _isLeftMoving = direction;
+    }
+
+    public void SetGrounded(bool grounded)
+    {
+        _isGrounded = grounded;
     }
 }

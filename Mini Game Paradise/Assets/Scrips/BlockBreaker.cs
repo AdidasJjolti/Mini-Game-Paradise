@@ -80,7 +80,7 @@ public class BlockBreaker : MonoBehaviour, ISubject
         if (collision.CompareTag("Line"))
         {
             RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, Vector3.down, 0.1f);
-            Debug.DrawRay(transform.position, Vector3.down, Color.green, 2f);
+            //Debug.DrawRay(transform.position, Vector3.down, Color.green, 2f);
             foreach (var item in hit)
             {
                 if (item.transform.CompareTag("Line"))
@@ -122,7 +122,7 @@ public class BlockBreaker : MonoBehaviour, ISubject
         onCoroutine = true;
 
         yield return new WaitForEndOfFrame();
-        //_playerControl.SetGrounded(false);
+        _playerControl.SetGrounded(false);
         onCoroutine = false;
         NotifyObservers();
     }
