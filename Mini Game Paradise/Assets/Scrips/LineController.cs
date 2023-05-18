@@ -80,7 +80,7 @@ public class LineController : MonoBehaviour
         }
 
          _parent = collision.transform.parent;
-        Transform[] children = _parent.GetComponentsInChildren<Transform>();
+        Transform[] children = _parent.GetComponentsInChildren<Transform>(true);           // 비활성화된 블럭도 찾음
         List<Transform> tempList = new List<Transform>();
         foreach (var child in children)
         {
@@ -93,6 +93,7 @@ public class LineController : MonoBehaviour
             {
                 continue;
             }
+            child.gameObject.SetActive(true);             // 비활성화된 블럭을 활성화
             tempList.Add(child);
         }
 

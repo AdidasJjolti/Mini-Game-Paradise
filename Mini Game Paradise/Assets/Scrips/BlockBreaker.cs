@@ -71,9 +71,8 @@ public class BlockBreaker : MonoBehaviour, ISubject
                 {
                     _playerControl.transform.Translate(Vector2.down * .5f * Time.deltaTime);
                 }
-                collision.GetComponent<SpriteRenderer>().enabled = false;
-                collision.GetComponent<Collider2D>().isTrigger = true;
-                StartCoroutine("SetPlayerState");
+                StartCoroutine(SetPlayerState());
+                StartCoroutine(SetBlockActive(collision));
             }
         }
 
@@ -86,7 +85,6 @@ public class BlockBreaker : MonoBehaviour, ISubject
                 if (item.transform.CompareTag("Line"))
                 {
                     _playerCollider.isTrigger = false;
-                    _isClicked = false;
                 }
             }
         }
@@ -123,7 +121,18 @@ public class BlockBreaker : MonoBehaviour, ISubject
 
         yield return new WaitForEndOfFrame();
         _playerControl.SetGrounded(false);
+        _isClicked = false;
         onCoroutine = false;
         NotifyObservers();
+    }
+
+    IEnumerator SetBlockActive(Collider2D collision)
+    {
+        collision.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+
+        collision.gameObject.SetActive(true);
+        collision.GetComponent<SpriteRenderer>().enabled = false;
+        collision.GetComponent<Collider2D>().isTrigger = true;
     }
 }
