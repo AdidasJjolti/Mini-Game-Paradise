@@ -95,7 +95,12 @@ public class BBFriendStates : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Friend") && _isStunned == false)
+        if(_isStunned == true)
+        {
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
+        }
+
+        if(collision.gameObject.CompareTag("Friend") && _isStunned == false && collision.gameObject.GetComponent<BBFriendStates>().GetFriendState() == false)
         {
             StartCoroutine(Stun(collision, true));
         }
@@ -144,6 +149,11 @@ public class BBFriendStates : MonoBehaviour
         _isLeftMoving = _leftMove;
     }
 
+    public bool GetFriendState()
+    {
+        return _isStunned;
+    }
+
     // 스턴 상태일 때 움직임을 멈추고 거꾸로 된 상태로 변경
     IEnumerator Stun(Collision2D collision, bool isFriend)
     {
@@ -173,8 +183,9 @@ public class BBFriendStates : MonoBehaviour
             Debug.Log("Bang!!");
         }
 
-        Physics2D.IgnoreLayerCollision(7, 7, true);
-        Physics2D.IgnoreLayerCollision(7, 3, true);
+        //Physics2D.IgnoreLayerCollision(7, 7, true);
+        //Physics2D.IgnoreLayerCollision(7, 3, true);
+        Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
         yield return new WaitForSecondsRealtime(_stunTime);
 
         // 스턴 해제 후 원상 복귀
@@ -182,8 +193,9 @@ public class BBFriendStates : MonoBehaviour
         _ableMoving = true;
         _renderer.flipY = false;
         _animator.SetBool("isStunned", false);
-        Physics2D.IgnoreLayerCollision(7, 7, false);
-        Physics2D.IgnoreLayerCollision(7, 3, false);
+        //Physics2D.IgnoreLayerCollision(7, 7, false);
+        //Physics2D.IgnoreLayerCollision(7, 3, false);
+        Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
     }
 
     IEnumerator KnockBack(int dir)        // 넉백 방향을 dir으로 받아옴;  1이면 오른쪽, -1이면 왼쪽

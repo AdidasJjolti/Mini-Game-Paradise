@@ -63,14 +63,7 @@ public class BlockBreaker : MonoBehaviour, ISubject
             Debug.Log("땅 뚫었음");
             if (collision.transform.CompareTag("Line") && _playerControl.GetGrounded())          // Line 태그에 닿았고 플레이어가 땅에 닿은 상태일 때 실행
             {
-                if(_playerControl.GetLeftMoving() == false)
-                {
-                    _playerControl.transform.Translate(Vector2.down * .5f * Time.deltaTime);
-                }
-                else
-                {
-                    _playerControl.transform.Translate(Vector2.down * .5f * Time.deltaTime);
-                }
+                _playerControl.transform.Translate(Vector2.down * .5f * Time.deltaTime);
                 StartCoroutine(SetPlayerState());
                 StartCoroutine(SetBlockActive(collision));
             }

@@ -41,15 +41,17 @@ public class PlayerControl : MonoBehaviour
             Debug.Log("<color=red>_isGrounded = false</color>");
         }
 
-        //Debug.Log("Player velocity is " + _rigid.velocity);
+        Debug.Log("Player velocity is " + _rigid.velocity);
         if (_isLeftMoving == false)
         {
             _renderer.flipX = false;
+            _rigid.velocity = new Vector2(0, _rigid.velocity.y);
             gameObject.transform.Translate(Vector2.right * _speed * Time.deltaTime);
         }
         else
         {
             _renderer.flipX = true;
+            _rigid.velocity = new Vector2(0, _rigid.velocity.y);
             gameObject.transform.Translate(Vector2.left * _speed * Time.deltaTime);
         }
 
