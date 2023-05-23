@@ -95,12 +95,12 @@ public class BBFriendStates : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(_isStunned == true)
-        {
-            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
-        }
+        //if (_isStunned == true)
+        //{
+        //    Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
+        //}
 
-        if(collision.gameObject.CompareTag("Friend") && _isStunned == false && collision.gameObject.GetComponent<BBFriendStates>().GetFriendState() == false)
+        if (collision.gameObject.CompareTag("Friend") && _isStunned == false && collision.gameObject.GetComponent<BBFriendStates>().GetFriendState() == false)
         {
             StartCoroutine(Stun(collision, true));
         }
@@ -157,10 +157,27 @@ public class BBFriendStates : MonoBehaviour
     // 스턴 상태일 때 움직임을 멈추고 거꾸로 된 상태로 변경
     IEnumerator Stun(Collision2D collision, bool isFriend)
     {
-        if(_isStunned == true)
+        if(_ableMoving == false)
         {
             yield break;
         }
+
+        // 같은 오브젝트와 충돌한 경우 무시
+        if(this.gameObject == collision.gameObject)
+        {
+            Debug.Log($"나 자신:{transform.name}");
+            yield break;
+        }
+
+        // 친구도 아니고 플레이어도 아니면 무시
+        if (!collision.gameObject.CompareTag("Friend") && !collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log($"충돌한 태그는 : {collision.gameObject.tag}");
+            yield break;
+        }
+
+        Debug.Log($"Collision name : {collision.transform.name}");
+        yield return new WaitForEndOfFrame();
 
         // 스턴 시 처리
         _isStunned = true;
@@ -174,7 +191,7 @@ public class BBFriendStates : MonoBehaviour
         {
             if(this.transform.position.x > collision.transform.position.x)
             {
-                StartCoroutine(KnockBack(1)) ;
+                StartCoroutine(KnockBack(1));
             }
             else
             {
@@ -185,7 +202,7 @@ public class BBFriendStates : MonoBehaviour
 
         //Physics2D.IgnoreLayerCollision(7, 7, true);
         //Physics2D.IgnoreLayerCollision(7, 3, true);
-        Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
+        //Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), true);
         yield return new WaitForSecondsRealtime(_stunTime);
 
         // 스턴 해제 후 원상 복귀
@@ -195,7 +212,7 @@ public class BBFriendStates : MonoBehaviour
         _animator.SetBool("isStunned", false);
         //Physics2D.IgnoreLayerCollision(7, 7, false);
         //Physics2D.IgnoreLayerCollision(7, 3, false);
-        Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+        //Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
     }
 
     IEnumerator KnockBack(int dir)        // 넉백 방향을 dir으로 받아옴;  1이면 오른쪽, -1이면 왼쪽
