@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public interface ISubject
 {
@@ -31,9 +32,9 @@ public class BlockBreaker : MonoBehaviour, ISubject
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            _isClicked = true;
+             _isClicked = true;
         }
         Debug.Log($"<color=aqua>_isClicked = {_isClicked}</color>");
     }
