@@ -41,6 +41,7 @@ public class Item : MonoBehaviour
         {
             //Debug.Log("Got It!");
             _scoreManager.SendMessage("ItemScoreUpdate", _itemType);
+            SoundManager.Instance.PlayCollectSound();
             ItemPool.Instance.PoolIn(gameObject, _itemType);
         }
 

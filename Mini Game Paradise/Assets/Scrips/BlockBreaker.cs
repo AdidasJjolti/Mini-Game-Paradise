@@ -112,6 +112,7 @@ public class BlockBreaker : MonoBehaviour, ISubject
             yield break;
         }
         onCoroutine = true;
+        SoundManager.Instance.PlayJumpSound();         // 여러 블럭이 깨지면서 효과음이 여러번 불리는 것을 코루틴으로 방지
 
         yield return new WaitForEndOfFrame();
         _playerControl.SetGrounded(false);

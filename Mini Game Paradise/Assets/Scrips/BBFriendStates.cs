@@ -118,6 +118,8 @@ public class BBFriendStates : MonoBehaviour
                 {
                     collision.gameObject.GetComponent<PlayerControl>().SetLeftMoving(true);
                 }
+
+                SoundManager.Instance.PlayJumpOnFriendSound();
                 StartCoroutine(Stun(collision, false));
             }
             else

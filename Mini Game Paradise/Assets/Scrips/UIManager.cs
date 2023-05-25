@@ -36,22 +36,31 @@ public class UIManager : MonoBehaviour
     public void OnClickSettingsButton()
     {
         _settingsUI.SetActive(true);
+        SoundManager.Instance.PlayButtonClickSound();
         Time.timeScale = 0;
     }
 
     public void OnClickResumeButton()
     {
         Time.timeScale = 1;
+        SoundManager.Instance.PlayButtonClickSound();
         _settingsUI.SetActive(false);
+    }
+
+    public void OnClickMainButton()
+    {
+        // ToDo : 구현 필요
     }
 
     public void BGMOnValueChanged(float bgmVolume)
     {
+        SoundManager.Instance.SetBGMVolume(bgmVolume);
         PlayerPrefs.SetFloat("BGMVolume", bgmVolume);
     }
 
     public void SFXOnValueChanged(float sfxVolume)
     {
+        SoundManager.Instance.SetSFXVolume(sfxVolume);
         PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
     }
 }
