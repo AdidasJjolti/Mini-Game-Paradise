@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class BBGameManager : MonoBehaviour
 {
+    [SerializeField] UIManager _UIManager;
     bool _isGameOver;
 
     void Start()
@@ -40,5 +41,6 @@ public class BBGameManager : MonoBehaviour
             BBScoreManager.SendMessage("SaveScore");             // 게임 오버일 때 점수 저장 하도록 메시지 전달
         }
         Debug.Log("게임 오버");
+        _UIManager.SendMessage("OpenGameOverUI");
     }
 }

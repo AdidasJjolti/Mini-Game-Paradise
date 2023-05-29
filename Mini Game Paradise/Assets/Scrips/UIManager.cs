@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] GameObject _settingsUI;
+    [SerializeField] GameObject _SettingsUI;
+    [SerializeField] GameObject _GameOverUI;
     [SerializeField] Slider _BGMSlider;
     [SerializeField] Slider _SFXSlider;
 
@@ -35,7 +37,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickSettingsButton()
     {
-        _settingsUI.SetActive(true);
+        _SettingsUI.SetActive(true);
         SoundManager.Instance.PlayButtonClickSound();
         Time.timeScale = 0;
     }
@@ -44,7 +46,7 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SoundManager.Instance.PlayButtonClickSound();
-        _settingsUI.SetActive(false);
+        _SettingsUI.SetActive(false);
     }
 
     public void OnClickMainButton()
@@ -62,5 +64,18 @@ public class UIManager : MonoBehaviour
     {
         SoundManager.Instance.SetSFXVolume(sfxVolume);
         PlayerPrefs.SetFloat("SFXVolume", sfxVolume);
+    }
+
+    public void OpenGameOverUI()
+    {
+        _GameOverUI.SetActive(true);
+    }
+
+    public void OnClickRestartButton()
+    {
+        Time.timeScale = 1;
+        SoundManager.Instance.PlayButtonClickSound();
+        _GameOverUI.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
