@@ -107,6 +107,7 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
         SetScoreText();
     }
 
+    // 화면 우상단에 현재 점수, 최고 점수 텍스트 갱신
     public void SetScoreText()
     {
         _curScoreText.text = _curScore.ToString();
@@ -117,6 +118,7 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
         }
     }
 
+    // 최고 기록 갱신될 때 PlayerPrefs에 최고 기록 저장
     public void SaveScore()
     {
         if(_isScoreRenewed)
@@ -124,5 +126,11 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
             PlayerPrefs.SetInt("BB_bestScore", _curScore);
             //Debug.Log("기록 바뀜");
         }
+    }
+
+    // 게임 오버 UI에 현재 기록 전달용 함수
+    public int GetCurScore()
+    {
+        return _curScore;
     }
 }

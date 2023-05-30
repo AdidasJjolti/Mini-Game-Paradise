@@ -69,6 +69,9 @@ public class UIManager : MonoBehaviour
     public void OpenGameOverUI()
     {
         _GameOverUI.SetActive(true);
+        //기록 뿌리기
+        SaveRecords();      // 현재 기록 저장, 현재 기록은 BBScoreManager에서 가져오기
+        ShowRecords();      // 내림차순으로 상위 5개 기록을 순위표에 차례대로 표시
     }
 
     public void OnClickRestartButton()
@@ -77,5 +80,20 @@ public class UIManager : MonoBehaviour
         SoundManager.Instance.PlayButtonClickSound();
         _GameOverUI.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void SaveRecords()
+    {
+        // csv 파일에 기록 저장하기
+        // 1. BBScoreManager에서 현재 기록 가져오기 : GetCurScore 호출
+        // 2. GetCurScore로 호출된 int값을 BB_Records.SaveIntToCSV를 사용하여 저장
+    }
+
+    public void ShowRecords()
+    {
+        // csv 파일에서 기록 가져오기
+        // 1. BB_Records.ReadIntFromCSV를 사용하여 데이터 불러오기, 인트 리스트로 불러옴
+        // 2. 첫번째 값부터 다섯번째 값까지 순서대로 1위 ~ 5위 기록 표시
+        // 3. 불러올 값이 없는 경우 -로 표시
     }
 }
