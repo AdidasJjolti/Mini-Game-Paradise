@@ -50,6 +50,7 @@ public class SoundManager : MonoBehaviour
         if (_bgmPlayer != null)
         {
             _bgmPlayer.Play();
+            _bgmPlayer.loop = true;
         }
     }
 

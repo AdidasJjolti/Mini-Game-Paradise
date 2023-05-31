@@ -3,17 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] GameObject _SettingsUI;
-    [SerializeField] GameObject _GameOverUI;
+    [SerializeField] GameObject _settingsUI;
+
+    [SerializeField] GameObject _gameOverUI;
+    [SerializeField] TextMeshProUGUI _curScore;
+    [SerializeField] TextMeshProUGUI[] _highScores;
+
+
     [SerializeField] Slider _BGMSlider;
     [SerializeField] Slider _SFXSlider;
 
+
+
     void Awake()
     {
-        if(PlayerPrefs.HasKey("BGMVolume"))
+        if(!_settingsUI)
+        {
+            _settingsUI = GameObject.Find("Canvas").transform.Find("SettingsUI").gameObject;
+        }
+
+        if (!_gameOverUI)
+        {
+            _gameOverUI = GameObject.Find("Canvas").transform.Find("GameOverUI").gameObject;
+        }
+
+        var sliders = FindObjectsOfType<Slider>(true);
+
+        if(!_BGMSlider)
+        {
+            foreach (var slider in sliders)
+            {
+                if (slider.transform.name == "BGMSlider")
+                {
+                    _BGMSlider = slider;
+                }
+            }
+        }
+
+        if (!_SFXSlider)
+        {
+            foreach (var slider in sliders)
+            {
+                if (slider.transform.name == "SFXSlider")
+                {
+                    _SFXSlider = slider;
+                }
+            }
+        }
+
+        if (PlayerPrefs.HasKey("BGMVolume"))
         {
             _BGMSlider.value = PlayerPrefs.GetFloat("BGMVolume");
         }
@@ -33,11 +75,79 @@ public class UIManager : MonoBehaviour
 
         _BGMSlider.onValueChanged.AddListener(BGMOnValueChanged);
         _SFXSlider.onValueChanged.AddListener(SFXOnValueChanged);
+
+        var texts = FindObjectsOfType<TextMeshProUGUI>(true);
+
+        if (!_curScore)
+        {
+            foreach (var text in texts)
+            {
+                if (text.transform.name == "CurrentRecord")
+                {
+                    _curScore = text;
+                }
+            }
+        }
+
+        if(_highScores.Length < 5)
+        {
+            for(int i = 0; i < 5; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        foreach (var text in texts)
+                        {
+                            if (text.transform.name == "FirstScore")
+                            {
+                                _highScores[0] = text;
+                            }
+                        }
+                        break;
+                    case 1:
+                        foreach (var text in texts)
+                        {
+                            if (text.transform.name == "SecondScore")
+                            {
+                                _highScores[1] = text;
+                            }
+                        }
+                        break;
+                    case 2:
+                        foreach (var text in texts)
+                        {
+                            if (text.transform.name == "ThirdScore")
+                            {
+                                _highScores[2] = text;
+                            }
+                        }
+                        break;
+                    case 3:
+                        foreach (var text in texts)
+                        {
+                            if (text.transform.name == "FourthScore")
+                            {
+                                _highScores[3] = text;
+                            }
+                        }
+                        break;
+                    case 4:
+                        foreach (var text in texts)
+                        {
+                            if (text.transform.name == "FifthScore")
+                            {
+                                _highScores[4] = text;
+                            }
+                        }
+                        break;
+                }
+            }
+        }
     }
 
     public void OnClickSettingsButton()
     {
-        _SettingsUI.SetActive(true);
+        _settingsUI.SetActive(true);
         SoundManager.Instance.PlayButtonClickSound();
         Time.timeScale = 0;
     }
@@ -46,12 +156,12 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SoundManager.Instance.PlayButtonClickSound();
-        _SettingsUI.SetActive(false);
+        _settingsUI.SetActive(false);
     }
 
     public void OnClickMainButton()
     {
-        // ToDo : ±¸Çö ÇÊ¿ä
+        // ToDo : ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
     }
 
     public void BGMOnValueChanged(float bgmVolume)
@@ -68,32 +178,46 @@ public class UIManager : MonoBehaviour
 
     public void OpenGameOverUI()
     {
-        _GameOverUI.SetActive(true);
-        //±â·Ï »Ñ¸®±â
-        SaveRecords();      // ÇöÀç ±â·Ï ÀúÀå, ÇöÀç ±â·ÏÀº BBScoreManager¿¡¼­ °¡Á®¿À±â
-        ShowRecords();      // ³»¸²Â÷¼øÀ¸·Î »óÀ§ 5°³ ±â·ÏÀ» ¼øÀ§Ç¥¿¡ Â÷·Ê´ë·Î Ç¥½Ã
+        _gameOverUI.SetActive(true);
+        //ï¿½ï¿½ï¿½ ï¿½Ñ¸ï¿½ï¿½ï¿½
+        SaveRecords();      // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ BBScoreManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        ShowRecords();      // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½Ê´ï¿½ï¿½ Ç¥ï¿½ï¿½
     }
 
     public void OnClickRestartButton()
     {
         Time.timeScale = 1;
         SoundManager.Instance.PlayButtonClickSound();
-        _GameOverUI.SetActive(false);
+        _gameOverUI.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void SaveRecords()
     {
-        // csv ÆÄÀÏ¿¡ ±â·Ï ÀúÀåÇÏ±â
-        // 1. BBScoreManager¿¡¼­ ÇöÀç ±â·Ï °¡Á®¿À±â : GetCurScore È£Ãâ
-        // 2. GetCurScore·Î È£ÃâµÈ int°ªÀ» BB_Records.SaveIntToCSV¸¦ »ç¿ëÇÏ¿© ÀúÀå
+        // csv ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+        // 1. BBScoreManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : GetCurScore È£ï¿½ï¿½
+        int curScore = FindObjectOfType<BreakBreakScoreManager>().GetCurScore();
+        // 2. GetCurScoreï¿½ï¿½ È£ï¿½ï¿½ï¿½ intï¿½ï¿½ï¿½ï¿½ BB_Records.SaveIntToCSVï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½
+        BB_Records.SaveIntToCSV(curScore);
+        // 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ï¿ï¿½ Ç¥ï¿½ï¿½
+        _curScore.text = string.Format("{0:#,###}", curScore);
     }
 
     public void ShowRecords()
     {
-        // csv ÆÄÀÏ¿¡¼­ ±â·Ï °¡Á®¿À±â
-        // 1. BB_Records.ReadIntFromCSV¸¦ »ç¿ëÇÏ¿© µ¥ÀÌÅÍ ºÒ·¯¿À±â, ÀÎÆ® ¸®½ºÆ®·Î ºÒ·¯¿È
-        // 2. Ã¹¹øÂ° °ªºÎÅÍ ´Ù¼¸¹øÂ° °ª±îÁö ¼ø¼­´ë·Î 1À§ ~ 5À§ ±â·Ï Ç¥½Ã
-        // 3. ºÒ·¯¿Ã °ªÀÌ ¾ø´Â °æ¿ì -·Î Ç¥½Ã
+        // csv ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // 1. BB_Records.ReadIntFromCSVï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½
+        List<int> records = BB_Records.ReadIntFromCSV();
+        //foreach (var item in records)
+        //{
+        //    Debug.Log(item);
+        //}
+        
+        // 2. Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¼ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ~ 5ï¿½ï¿½ ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
+        for(int i = 0; i < records.Count; i++)
+        {
+            _highScores[i].text = string.Format("{0:#,###}", records[i]);
+        }
+        // 3. ï¿½Ò·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ -ï¿½ï¿½ Ç¥ï¿½ï¿½
     }
 }

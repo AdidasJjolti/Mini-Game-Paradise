@@ -4,11 +4,11 @@ using UnityEngine;
 using System.IO;
 using System;
 
-public class BB_Records : MonoBehaviour
+public class BB_Records
 {
-    public string fileName = "BB_Records.csv";
+    public static string fileName = "BB_Records.csv";
 
-    public void SaveIntToCSV(int value)
+    public static void SaveIntToCSV(int value)
     {
         string filePath = Path.Combine(Application.persistentDataPath, fileName);
 
@@ -35,7 +35,7 @@ public class BB_Records : MonoBehaviour
         }
     }
 
-    public List<int> ReadIntFromCSV()
+    public static List<int> ReadIntFromCSV()
     {
         List<int> data = new List<int>();
 
