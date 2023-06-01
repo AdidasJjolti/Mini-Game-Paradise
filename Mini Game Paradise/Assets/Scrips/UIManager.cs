@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
+using System.Text;
+using System.Linq;
 
 public class UIManager : MonoBehaviour
 {
@@ -161,7 +164,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickMainButton()
     {
-        // ToDo : ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
+        // ToDo : ¸ÞÀÎ È­¸é ¸¸µé°í ±¸ÇöÇÏ±â
     }
 
     public void BGMOnValueChanged(float bgmVolume)
@@ -179,9 +182,9 @@ public class UIManager : MonoBehaviour
     public void OpenGameOverUI()
     {
         _gameOverUI.SetActive(true);
-        //ï¿½ï¿½ï¿½ ï¿½Ñ¸ï¿½ï¿½ï¿½
-        SaveRecords();      // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ BBScoreManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-        ShowRecords();      // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 5ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½Ê´ï¿½ï¿½ Ç¥ï¿½ï¿½
+
+        SaveRecords();      
+        ShowRecords();      
     }
 
     public void OnClickRestartButton()
@@ -194,30 +197,21 @@ public class UIManager : MonoBehaviour
 
     public void SaveRecords()
     {
-        // csv ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
-        // 1. BBScoreManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : GetCurScore È£ï¿½ï¿½
+        // BBScoreManager¿¡¼­ ÇöÀç Á¡¼ö °¡Á®¿Í¼­ ÀúÀå
         int curScore = FindObjectOfType<BreakBreakScoreManager>().GetCurScore();
-        // 2. GetCurScoreï¿½ï¿½ È£ï¿½ï¿½ï¿½ intï¿½ï¿½ï¿½ï¿½ BB_Records.SaveIntToCSVï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½
-        BB_Records.SaveIntToCSV(curScore);
-        // 3. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ï¿ï¿½ Ç¥ï¿½ï¿½
+        long unixTime = DateTimeOffset.Now.ToUnixTimeSeconds();
+        BB_Records.SaveScoreToCSV(curScore, unixTime);
         _curScore.text = string.Format("{0:#,###}", curScore);
     }
 
     public void ShowRecords()
     {
-        // csv ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-        // 1. BB_Records.ReadIntFromCSVï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½
-        List<int> records = BB_Records.ReadIntFromCSV();
-        //foreach (var item in records)
-        //{
-        //    Debug.Log(item);
-        //}
-        
-        // 2. Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¼ï¿½ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½ ~ 5ï¿½ï¿½ ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
+        List<int> records = BB_Records.LoadScoresFromCSV();
+
+        // CSVÆÄÀÏ¿¡¼­ °¡Á®¿Â ±â·ÏÀ» Ç¥½Ã
         for(int i = 0; i < records.Count; i++)
         {
             _highScores[i].text = string.Format("{0:#,###}", records[i]);
         }
-        // 3. ï¿½Ò·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ -ï¿½ï¿½ Ç¥ï¿½ï¿½
     }
 }
