@@ -207,6 +207,7 @@ public class UIManager : MonoBehaviour
         // ToDo : 이전 상위 5개 기록 저장하기
         List<int> records = BB_Records.LoadScoresFromCSV();
         List<int> beforeRanking = new List<int>();
+        List<int> afterRanking = new List<int>();
 
         if(records.Count == 0)
         {
@@ -221,10 +222,10 @@ public class UIManager : MonoBehaviour
             SaveRecords();
             ShowRecords();
 
-            List<int> afterRanking = SaveRankings();
+            afterRanking = SaveRankings();
 
             // 이전 상위 5개 기록과 저장 후 상위 5개 기록을 비교하여 바뀐 기록이 있으면 해당 기록에 new 아이콘 표시
-            for (int i = 0; i < afterRanking.Count; i++)
+            for (int i = 0; i < Mathf.Clamp(afterRanking.Count, afterRanking.Count, 5); i++)  // 5보다 크면 5까지만 반복해야함!!!!!!!!!!!
             {
                 // 새로운 기록이 추가된 경우 new 표시
                 if (i + 1 > beforeRanking.Count)
@@ -241,6 +242,13 @@ public class UIManager : MonoBehaviour
                     break;
                 }
             }
+        }
+
+        // ToDo : 랭킹 메서드를 디버그 로그로 확인 먼저 필요!!!
+        List<int> finalRanking = ShowRankings(afterRanking);
+        for(int i = 0; i < finalRanking.Count; i++)
+        {
+            Debug.Log((i + 1) + " Record's Ranking is " + finalRanking[i]);
         }
     }
 
@@ -273,7 +281,7 @@ public class UIManager : MonoBehaviour
         List<int> records = BB_Records.LoadScoresFromCSV();
 
         // CSV파일에서 가져온 기록을 표시
-        for (int i = 0; i < records.Count; i++)
+        for (int i = 0; i < Mathf.Clamp(records.Count, records.Count, 5); i++)
         {
             _highScores[i].text = string.Format("{0:#,###}", records[i]);
         }
@@ -293,5 +301,31 @@ public class UIManager : MonoBehaviour
         }
 
         return Rankings;
+    }
+
+    // 랭킹 구하는 메서드
+    public List<int> ShowRankings(List<int> score)
+    {
+        List<int> ranks = new List<int>();
+        int rank = 1;
+
+        for (int i = 0; i < score.Count; i++)
+        {
+            if(i == 0)        // 첫번째 인덱스면 1위 자동 부여
+            {
+                continue;
+            }
+            else if(i > 0 && score[i] == score[i - 1])    // 첫번째 인덱스가 아니고 이전 인덱스 값과 동일한 경우 동일 랭킹 부여
+            {
+                continue;
+            }
+            else if(i > 0 && score[i] < score[i - 1])     // 첫번째 인덱스가 아니고 이전 인덱스 값보다 작은 경우 현재 인덱스 +1을 랭킹으로 부여
+            {
+                rank = i + 1;
+            }
+            ranks.Add(rank);
+        }
+
+        return ranks;
     }
 }
