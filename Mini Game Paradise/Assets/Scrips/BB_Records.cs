@@ -95,24 +95,25 @@ public static class BB_Records
     public static List<int> LoadScoresFromCSV()
     {
         string filePath = Path.Combine(Application.persistentDataPath, fileName);
-
-        // CSV 파일 열기
-        StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
-
         List<int> scores = new List<int>();
 
-        while (!sr.EndOfStream)
+        if (File.Exists(filePath))
         {
-            string line = sr.ReadLine();
-            string[] data = line.Split(',');
+            // CSV 파일 열기
+            StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
 
-            int score = int.Parse(data[0]);
+            while (!sr.EndOfStream)
+            {
+                string line = sr.ReadLine();
+                string[] data = line.Split(',');
 
-            scores.Add(score);
+                int score = int.Parse(data[0]);
+
+                scores.Add(score);
+            }
+            // 파일 닫기
+            sr.Close();
         }
-
-        // 파일 닫기
-        sr.Close();
 
         return scores;
     }

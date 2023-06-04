@@ -10,6 +10,7 @@ TagManager:
   - Item
   - Friend
   - CameraTrigger
+  - New
   layers:
   - Default
   - TransparentFX
