@@ -11,20 +11,18 @@ using System.Linq;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] GameObject _settingsUI;
-
     [SerializeField] GameObject _gameOverUI;
     [SerializeField] TextMeshProUGUI _curScore;
-    [SerializeField] TextMeshProUGUI[] _highScores;
-    [SerializeField] Image[] _newIcons;
-
 
     [SerializeField] Slider _BGMSlider;
     [SerializeField] Slider _SFXSlider;
 
-
+    ScoreItem _scoreItem;
 
     void Awake()
     {
+        _scoreItem = FindObjectOfType<ScoreItem>(true);
+
         if(!_settingsUI)
         {
             _settingsUI = GameObject.Find("Canvas").transform.Find("SettingsUI").gameObject;
@@ -92,81 +90,6 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
-
-        if(_highScores.Length < 5)
-        {
-            for(int i = 0; i < 5; i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        foreach (var text in texts)
-                        {
-                            if (text.transform.name == "FirstScore")
-                            {
-                                _highScores[0] = text;
-                            }
-                        }
-                        break;
-                    case 1:
-                        foreach (var text in texts)
-                        {
-                            if (text.transform.name == "SecondScore")
-                            {
-                                _highScores[1] = text;
-                            }
-                        }
-                        break;
-                    case 2:
-                        foreach (var text in texts)
-                        {
-                            if (text.transform.name == "ThirdScore")
-                            {
-                                _highScores[2] = text;
-                            }
-                        }
-                        break;
-                    case 3:
-                        foreach (var text in texts)
-                        {
-                            if (text.transform.name == "FourthScore")
-                            {
-                                _highScores[3] = text;
-                            }
-                        }
-                        break;
-                    case 4:
-                        foreach (var text in texts)
-                        {
-                            if (text.transform.name == "FifthScore")
-                            {
-                                _highScores[4] = text;
-                            }
-                        }
-                        break;
-                }
-            }
-        }
-
-        Image[] image = FindObjectsOfType<Image>(true);
-        List<Image> imageList = new List<Image>(image);
-        for(int i = 0; i < imageList.Count; i++)
-        {
-            if(!imageList[i].CompareTag("New"))
-            {
-                imageList.Remove(imageList[i]);
-            }
-        }
-        image = imageList.ToArray();  // 제거할 원소 모두 찾은 다음 다시 리스트를 배열로 변환
-
-        // _newIcons 배열 원소를 image에서 채워 넣음
-        if(_newIcons.Length < 5)
-        {
-            for(int i = 0; i < 5; i++)
-            {
-                _newIcons[i] = image[i];
-            }
-        }
     }
 
     public void OnClickSettingsButton()
@@ -213,7 +136,9 @@ public class UIManager : MonoBehaviour
         {
             SaveRecords();
             ShowRecords();
-            _newIcons[0].gameObject.SetActive(true);   // 1위 기록에 new 아이콘 표시
+            //_newIcons[0].gameObject.SetActive(true);   // 1위 기록에 new 아이콘 표시
+            _scoreItem.SendMessage("SwitchOnNewIcon", 0);
+            afterRanking = SaveRankings();
         }
         else          // 보여줄 기록이 1개 이상이면 현재 기록 저장하기 전에 현재 상위 5개 기록을 먼저 저장 후 기록 저장, 기록 표시 실행
         {
@@ -230,24 +155,30 @@ public class UIManager : MonoBehaviour
                 // 새로운 기록이 추가된 경우 new 표시
                 if (i + 1 > beforeRanking.Count)
                 {
-                    _newIcons[i].gameObject.SetActive(true);
+                    //_newIcons[i].gameObject.SetActive(true);
+                    _scoreItem.SendMessage("SwitchOnNewIcon", i);
                     Debug.Log((i + 1) + " Record is Added!");
                     break;
                 }
                 // 이전 상위 기록과 바뀐 곳이 있는 경우 new 표시
                 else if (beforeRanking[i] != afterRanking[i])
                 {
-                    _newIcons[i].gameObject.SetActive(true);
+                    //_newIcons[i].gameObject.SetActive(true);
+                    _scoreItem.SendMessage("SwitchOnNewIcon", i);
                     Debug.Log((i + 1) + " Record is Renewed!");
                     break;
                 }
             }
         }
 
-        // ToDo : 랭킹 메서드를 디버그 로그로 확인 먼저 필요!!!
         List<int> finalRanking = ShowRankings(afterRanking);
+        int[] param = new int[2];
+        Debug.Log("finalRanking Length is " + finalRanking.Count);
         for(int i = 0; i < finalRanking.Count; i++)
         {
+            param[0] = i;
+            param[1] = finalRanking[i];
+            _scoreItem.SendMessage("SetRankings", param);
             Debug.Log((i + 1) + " Record's Ranking is " + finalRanking[i]);
         }
     }
@@ -257,9 +188,10 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1;
         SoundManager.Instance.PlayButtonClickSound();
 
-        for(int i = 0; i < _newIcons.Length; i++)         // 게임 오버 UI 닫을 때 new 아이콘도 모두 끄기
+        for(int i = 0; i < 5; i++)         // 게임 오버 UI 닫을 때 new 아이콘도 모두 끄기
         {
-            _newIcons[i].gameObject.SetActive(false);
+            //_newIcons[i].gameObject.SetActive(false);
+            _scoreItem.SendMessage("SwitchOffNewIcon", i);
         }
         _gameOverUI.SetActive(false);
 
@@ -279,14 +211,17 @@ public class UIManager : MonoBehaviour
     public void ShowRecords()
     {
         List<int> records = BB_Records.LoadScoresFromCSV();
+        int[] param = new int[2];
 
         // CSV파일에서 가져온 기록을 표시
         for (int i = 0; i < Mathf.Clamp(records.Count, records.Count, 5); i++)
         {
-            _highScores[i].text = string.Format("{0:#,###}", records[i]);
-        }
+            param[0] = i;
+            param[1] = records[i];
 
-        // ToDo : 상위 5개 기록 반환하는 메서드 필요할수도....     << SaveRankings 메서드로 따로 구현하고 1개 기능만 하도록 함
+            //_highScores[i].text = string.Format("{0:#,###}", records[i]);
+            _scoreItem.SendMessage("SetHighScores", param);
+        }
     }
 
     // 상위 최대 5개 기록 반환하는 메서드, 게임 오버할 때 먼저 호출, 현재 기록 저장한 다음 한 번 더 호출
@@ -309,17 +244,11 @@ public class UIManager : MonoBehaviour
         List<int> ranks = new List<int>();
         int rank = 1;
 
-        for (int i = 0; i < score.Count; i++)
+        for (int i = 0; i < Mathf.Clamp(score.Count, score.Count, 5); i++)
         {
-            if(i == 0)        // 첫번째 인덱스면 1위 자동 부여
-            {
-                continue;
-            }
-            else if(i > 0 && score[i] == score[i - 1])    // 첫번째 인덱스가 아니고 이전 인덱스 값과 동일한 경우 동일 랭킹 부여
-            {
-                continue;
-            }
-            else if(i > 0 && score[i] < score[i - 1])     // 첫번째 인덱스가 아니고 이전 인덱스 값보다 작은 경우 현재 인덱스 +1을 랭킹으로 부여
+            // 첫번째 인덱스면 1위 자동 부여
+            // 첫번째 인덱스가 아니고 이전 인덱스 값과 동일한 경우 동일 랭킹 부여
+            if(i > 0 && score[i] < score[i - 1])     // 첫번째 인덱스가 아니고 이전 인덱스 값보다 작은 경우 현재 인덱스 +1을 랭킹으로 부여
             {
                 rank = i + 1;
             }
