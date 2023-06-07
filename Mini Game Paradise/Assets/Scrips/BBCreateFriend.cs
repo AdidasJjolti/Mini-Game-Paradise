@@ -9,6 +9,7 @@ public class BBCreateFriend : MonoBehaviour
     Transform[] _blocks;
     bool _isCreating;
     BBFriendPool _friendPool;
+    bool _isReset;           // upperTrigger를 만나서 위치가 바뀌면 true
 
     void Awake()
     {
@@ -36,7 +37,14 @@ public class BBCreateFriend : MonoBehaviour
             return;
         }
 
-        CreateFriend();
+        if(this.transform.name == "linePrefab" && _isReset == false)
+        {
+            return;
+        }
+        else
+        {
+            CreateFriend();
+        }
     }
 
     public void CreateFriend()
@@ -55,7 +63,7 @@ public class BBCreateFriend : MonoBehaviour
 
         // 친구 생성 확률 66%로 설정
         float chance = Random.Range(0f, 1f);
-        if (chance >= 0f)
+        if (chance <= 0.33f)
         {
             _isCreating = false;
             yield break;
@@ -83,6 +91,7 @@ public class BBCreateFriend : MonoBehaviour
                 break;
         }
 
+        // 친구 생성 후 위치 정하기
         if (obj != null)
         {
             GameObject ob = obj;
@@ -107,5 +116,9 @@ public class BBCreateFriend : MonoBehaviour
         _isCreating = false;
 
         yield return null;
+    }
+    public void BlockReset()
+    {
+        _isReset = true;
     }
 }

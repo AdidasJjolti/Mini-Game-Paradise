@@ -7,6 +7,7 @@ public class BBCreateItem : MonoBehaviour
     static bool _itemSkipLine;
     Transform[] _blocks;
     bool _isCreating;
+    bool _isReset;           // upperTrigger를 만나서 위치가 바뀌면 true
 
     void Awake()
     {
@@ -29,7 +30,14 @@ public class BBCreateItem : MonoBehaviour
             return;
         }
 
-        CreateStar();
+        if (this.transform.name == "linePrefab" && _isReset == false)
+        {
+            return;
+        }
+        else
+        {
+            CreateStar();
+        }
     }
 
     public void CreateStar()
@@ -108,5 +116,10 @@ public class BBCreateItem : MonoBehaviour
         _isCreating = false;
 
         yield return null;
+    }
+
+    public void BlockReset()
+    {
+        _isReset = true;
     }
 }

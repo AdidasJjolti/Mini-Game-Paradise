@@ -12,11 +12,18 @@ public class LineController : MonoBehaviour
     int _length;
     int _count;
 
+    BBCreateFriend _createFriend;
+    BBCreateItem _createItem;
+
+
     void Awake()
     {
         _count = 0;
         _blockIndex = _blocks.Length - 1;
         _length = _blocks.Length;
+
+        _createFriend = FindObjectOfType<BBCreateFriend>();
+        _createItem = FindObjectOfType<BBCreateItem>();
     }
 
     void OnTriggerStay2D(Collider2D collision)
@@ -25,8 +32,8 @@ public class LineController : MonoBehaviour
         {
 
             StartCoroutine(ResetBlocks(collision));
-
-
+            _createFriend.SendMessage("BlockReset");
+            _createItem.SendMessage("BlockReset");
 
             //if (_count > 16)
             //{

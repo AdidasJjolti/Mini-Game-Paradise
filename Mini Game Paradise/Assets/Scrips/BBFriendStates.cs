@@ -35,6 +35,8 @@ public class BBFriendStates : MonoBehaviour
 
     Animator _animator;
 
+    BreakBreakScoreManager _scoreManager;
+
     void Awake()
     {
         _friendPool = GetComponent<BBFriendPool>();
@@ -47,6 +49,8 @@ public class BBFriendStates : MonoBehaviour
 
         _animator = GetComponent<Animator>();
         _animator.SetBool("isStunned", false);
+
+        _scoreManager = FindObjectOfType<BreakBreakScoreManager>();
     }
 
 
@@ -119,6 +123,7 @@ public class BBFriendStates : MonoBehaviour
                     collision.gameObject.GetComponent<PlayerControl>().SetLeftMoving(true);
                 }
 
+                _scoreManager.SendMessage("ScoreUpdate", "Stun");
                 SoundManager.Instance.PlayJumpOnFriendSound();
                 StartCoroutine(Stun(collision, false));
             }

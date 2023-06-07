@@ -44,6 +44,10 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
                 _curScore += 100;
                 //Debug.Log("Current Score is " + _curScore);
                 break;
+            case "Stun":
+                _curScore += 150;
+                //Debug.Log("Current Score is " + _curScore);
+                break;
         }
 
         if(_curScore > _highestScore)

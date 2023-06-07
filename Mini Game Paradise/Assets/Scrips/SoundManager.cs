@@ -46,12 +46,16 @@ public class SoundManager : MonoBehaviour
     {
         _sfxPlayer = GetComponent<AudioSource>();
         SetBGM();
+        SetSFX();
 
         if (_bgmPlayer != null)
         {
             _bgmPlayer.Play();
             _bgmPlayer.loop = true;
         }
+
+        Debug.Log($"BGM volume is {_bgmPlayer.volume}");
+        Debug.Log($"SFX volume is {_sfxPlayer.volume}");
     }
 
     void SetBGM()
@@ -68,6 +72,18 @@ public class SoundManager : MonoBehaviour
         else
         {
             _bgmPlayer.volume = 1f;
+        }
+    }
+
+    void SetSFX()
+    {
+        if (PlayerPrefs.HasKey("SFXVolume"))
+        {
+            _sfxPlayer.volume = PlayerPrefs.GetFloat("SFXVolume");
+        }
+        else
+        {
+            _sfxPlayer.volume = 1f;
         }
     }
 
