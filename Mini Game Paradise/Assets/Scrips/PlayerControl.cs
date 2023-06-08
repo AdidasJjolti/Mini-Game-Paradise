@@ -29,7 +29,7 @@ public class PlayerControl : MonoBehaviour
             if (hit.transform.CompareTag("Line"))
             {
                 _isGrounded = true;
-                Debug.Log("<color=green>_isGrounded = true</color>");
+                //Debug.Log("<color=green>_isGrounded = true</color>");
                 break;
             }
         }
@@ -38,7 +38,7 @@ public class PlayerControl : MonoBehaviour
 
         if (_isGrounded == false)
         {
-            Debug.Log("<color=red>_isGrounded = false</color>");
+            //Debug.Log("<color=red>_isGrounded = false</color>");
         }
 
         //Debug.Log("Player velocity is " + _rigid.velocity);
@@ -67,6 +67,14 @@ public class PlayerControl : MonoBehaviour
     //        _isGrounded = true;
     //    }
     //}
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if(collision.gameObject.CompareTag("Friend") && collision.gameObject.GetComponent<BBFriendStates>().GetFriendState() == true)
+        //{
+        //    Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>(), true);
+        //}
+    }
 
     public bool GetGrounded()
     {

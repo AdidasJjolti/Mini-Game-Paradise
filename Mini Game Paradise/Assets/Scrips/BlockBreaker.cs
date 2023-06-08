@@ -36,7 +36,7 @@ public class BlockBreaker : MonoBehaviour, ISubject
         {
              _isClicked = true;
         }
-        Debug.Log($"<color=aqua>_isClicked = {_isClicked}</color>");
+        //Debug.Log($"<color=aqua>_isClicked = {_isClicked}</color>");
     }
 
     public void RegisterObserver(IObserver observer)

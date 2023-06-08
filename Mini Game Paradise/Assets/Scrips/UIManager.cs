@@ -155,7 +155,6 @@ public class UIManager : MonoBehaviour
                 // 새로운 기록이 추가된 경우 new 표시
                 if (i + 1 > beforeRanking.Count)
                 {
-                    //_newIcons[i].gameObject.SetActive(true);
                     _scoreItem.SendMessage("SwitchOnNewIcon", i);
                     Debug.Log((i + 1) + " Record is Added!");
                     break;
@@ -163,7 +162,6 @@ public class UIManager : MonoBehaviour
                 // 이전 상위 기록과 바뀐 곳이 있는 경우 new 표시
                 else if (beforeRanking[i] != afterRanking[i])
                 {
-                    //_newIcons[i].gameObject.SetActive(true);
                     _scoreItem.SendMessage("SwitchOnNewIcon", i);
                     Debug.Log((i + 1) + " Record is Renewed!");
                     break;
@@ -190,7 +188,6 @@ public class UIManager : MonoBehaviour
 
         for(int i = 0; i < 5; i++)         // 게임 오버 UI 닫을 때 new 아이콘도 모두 끄기
         {
-            //_newIcons[i].gameObject.SetActive(false);
             _scoreItem.SendMessage("SwitchOffNewIcon", i);
         }
         _gameOverUI.SetActive(false);
