@@ -208,9 +208,9 @@ public class BBFriendStates : MonoBehaviour
             Debug.Log("Bang!!");
         }
 
-        Physics2D.IgnoreLayerCollision(3, 8, true);
-        Physics2D.IgnoreLayerCollision(7, 8, true);
-        Physics2D.IgnoreLayerCollision(8, 8, true);
+        //Physics2D.IgnoreLayerCollision(3, 8, true);
+        //Physics2D.IgnoreLayerCollision(7, 8, true);
+        //Physics2D.IgnoreLayerCollision(8, 8, true);
         //Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>(), true);
         yield return new WaitForSecondsRealtime(_stunTime);
 
@@ -220,9 +220,9 @@ public class BBFriendStates : MonoBehaviour
         _renderer.flipY = false;
         _animator.SetBool("isStunned", false);
         gameObject.layer = LayerMask.NameToLayer("Friend");
-        Physics2D.IgnoreLayerCollision(3, 8, false);
-        Physics2D.IgnoreLayerCollision(7, 8, false);
-        Physics2D.IgnoreLayerCollision(8, 8, false);
+        //Physics2D.IgnoreLayerCollision(3, 8, false);
+        //Physics2D.IgnoreLayerCollision(7, 8, false);
+        //Physics2D.IgnoreLayerCollision(8, 8, false);
         //Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>(), false);
     }
 
