@@ -35,11 +35,6 @@ public class BBGameManager : MonoBehaviour
     {
         _isGameOver = true;
         Time.timeScale = 0f;
-        BreakBreakScoreManager BBScoreManager = FindObjectOfType<BreakBreakScoreManager>();
-        if (BBScoreManager != null)
-        {
-            BBScoreManager.SendMessage("SaveScore");             // 게임 오버일 때 점수 저장 하도록 메시지 전달
-        }
         Debug.Log("게임 오버");
         _UIManager.SendMessage("OpenGameOverUI");
     }

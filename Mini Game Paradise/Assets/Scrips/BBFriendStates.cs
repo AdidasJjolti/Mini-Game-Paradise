@@ -127,22 +127,34 @@ public class BBFriendStates : MonoBehaviour
                 SoundManager.Instance.PlayJumpOnFriendSound();
                 StartCoroutine(Stun(collision, false));
             }
-            else
-            {
-                if (collision.gameObject.GetComponent<PlayerControl>().GetGrounded() == true)
-                {
-                    BBGameManager BBGameManager = FindObjectOfType<BBGameManager>();
-                    BBGameManager.SetGameOver();
-                }
-            }
+            //else
+            //{
+            //    if (collision.gameObject.GetComponent<PlayerControl>().GetGrounded() == true)
+            //    {
+            //        BBGameManager BBGameManager = FindObjectOfType<BBGameManager>();
+            //        BBGameManager.SetGameOver();
+            //    }
+            //}
         }
     }
 
     void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Line"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            _isGrounded = true;
+            if(collision.gameObject.GetComponent<PlayerControl>().GetGrounded() == true)
+            {
+                if(Mathf.Abs(collision.transform.position.x - transform.position.x) < (collision.gameObject.GetComponent<CircleCollider2D>().radius + GetComponent<CircleCollider2D>().radius))
+                {
+                    Debug.Log("닿았지롱");
+                    BBGameManager BBGameManager = FindObjectOfType<BBGameManager>();
+                    BBGameManager.SetGameOver();
+                }
+            }
+            //if (collision.gameObject.CompareTag("Line"))
+            //{
+            //    _isGrounded = true;
+            //}
         }
     }
 
@@ -208,10 +220,6 @@ public class BBFriendStates : MonoBehaviour
             Debug.Log("Bang!!");
         }
 
-        //Physics2D.IgnoreLayerCollision(3, 8, true);
-        //Physics2D.IgnoreLayerCollision(7, 8, true);
-        //Physics2D.IgnoreLayerCollision(8, 8, true);
-        //Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>(), true);
         yield return new WaitForSecondsRealtime(_stunTime);
 
         // 스턴 해제 후 원상 복귀
@@ -220,10 +228,6 @@ public class BBFriendStates : MonoBehaviour
         _renderer.flipY = false;
         _animator.SetBool("isStunned", false);
         gameObject.layer = LayerMask.NameToLayer("Friend");
-        //Physics2D.IgnoreLayerCollision(3, 8, false);
-        //Physics2D.IgnoreLayerCollision(7, 8, false);
-        //Physics2D.IgnoreLayerCollision(8, 8, false);
-        //Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>(), false);
     }
 
     IEnumerator KnockBack(int dir)        // 넉백 방향을 dir으로 받아옴;  1이면 오른쪽, -1이면 왼쪽

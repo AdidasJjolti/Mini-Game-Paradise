@@ -22,9 +22,10 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
     {
         _blockBreaker.RegisterObserver(this.GetComponent<IObserver>());
         _curScore = 0;
-        if(PlayerPrefs.HasKey("BB_bestScore"))
+        List<int> records = BB_Records.LoadScoresFromCSV();
+        if(records.Count > 0)
         {
-            _highestScore = PlayerPrefs.GetInt("BB_bestScore");
+            _highestScore = records[0];
         }
         else
         {
@@ -122,15 +123,14 @@ public class BreakBreakScoreManager : MonoBehaviour, IObserver
         }
     }
 
-    // 최고 기록 갱신될 때 PlayerPrefs에 최고 기록 저장
-    public void SaveScore()
-    {
-        if(_isScoreRenewed)
-        {
-            PlayerPrefs.SetInt("BB_bestScore", _curScore);
-            //Debug.Log("기록 바뀜");
-        }
-    }
+    // 최고 기록 갱신될 때 PlayerPrefs에 최고 기록 저장, CSV 파일로 전체 기록을 넘겨주는 코드로 수정하면서 필요 없어짐
+    //public void SaveScore()
+    //{
+    //    if(_isScoreRenewed)
+    //    {
+    //        PlayerPrefs.SetInt("BB_bestScore", _curScore);
+    //    }
+    //}
 
     // 게임 오버 UI에 현재 기록 전달용 함수
     public int GetCurScore()

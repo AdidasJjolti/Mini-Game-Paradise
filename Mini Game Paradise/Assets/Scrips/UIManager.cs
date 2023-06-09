@@ -127,7 +127,6 @@ public class UIManager : MonoBehaviour
     {
         _gameOverUI.SetActive(true);
 
-        // ToDo : 이전 상위 5개 기록 저장하기
         List<int> records = BB_Records.LoadScoresFromCSV();
         List<int> beforeRanking = new List<int>();
         List<int> afterRanking = new List<int>();
@@ -137,7 +136,7 @@ public class UIManager : MonoBehaviour
             SaveRecords();
             ShowRecords();
             //_newIcons[0].gameObject.SetActive(true);   // 1위 기록에 new 아이콘 표시
-            _scoreItem.SendMessage("SwitchOnNewIcon", 0);
+            _scoreItem.SendMessage("SwitchOnNewIcon", -1);    // 매개 변수로 0을 보내면 인식하지 않는 오류가 있어 -1로 전달하고 예외 처리로 해결
             afterRanking = SaveRankings();
         }
         else          // 보여줄 기록이 1개 이상이면 현재 기록 저장하기 전에 현재 상위 5개 기록을 먼저 저장 후 기록 저장, 기록 표시 실행

@@ -15,6 +15,7 @@ public class ScoreItem : MonoBehaviour
         var texts = FindObjectsOfType<TextMeshProUGUI>(true);
         Image[] images = FindObjectsOfType<Image>(true);
 
+        // SerializeField로 세팅한 배열 크기가 5가 아닌 경우에 대비한 방어 코드
         if (_highScores.Length < 5)
         {
             for (int i = 0; i < 5; i++)
@@ -138,6 +139,10 @@ public class ScoreItem : MonoBehaviour
 
     public void SwitchOnNewIcon(int i)
     {
+        if(i < 0)
+        {
+            i = 0;
+        }
         _newIcons[i].gameObject.SetActive(true);
     }
 
