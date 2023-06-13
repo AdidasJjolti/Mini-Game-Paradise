@@ -11,6 +11,9 @@ TagManager:
   - Friend
   - CameraTrigger
   - New
+  - leftBackgroundTrigger
+  - rightBackgroundTrigger
+  - upperBackgroundTrigger
   layers:
   - Default
   - TransparentFX

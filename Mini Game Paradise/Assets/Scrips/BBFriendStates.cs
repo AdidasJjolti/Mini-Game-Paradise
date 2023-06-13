@@ -117,10 +117,12 @@ public class BBFriendStates : MonoBehaviour
                 if(collision.transform.position.x > transform.position.x)
                 {
                     collision.gameObject.GetComponent<PlayerControl>().SetLeftMoving(false);
+                    collision.gameObject.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * 0.25f, ForceMode2D.Impulse);
                 }
                 else
                 {
                     collision.gameObject.GetComponent<PlayerControl>().SetLeftMoving(true);
+                    collision.gameObject.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * 0.25f, ForceMode2D.Impulse);
                 }
 
                 _scoreManager.SendMessage("ScoreUpdate", "Stun");
