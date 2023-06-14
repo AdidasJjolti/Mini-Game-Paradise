@@ -805,6 +805,8 @@ MonoBehaviour:
   _isGrounded: 0
   _renderer: {fileID: 590390873}
   _animator: {fileID: 590390874}
+  _leftBGTrigger: {fileID: 2018232512}
+  _rightBGTrigger: {fileID: 1751054613}
 --- !u!58 &119013426
 CircleCollider2D:
   m_ObjectHideFlags: 0

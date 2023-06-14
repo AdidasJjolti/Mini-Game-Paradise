@@ -175,6 +175,11 @@ public class BBFriendStates : MonoBehaviour
         return _isStunned;
     }
 
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
+    }
+
     // 스턴 상태일 때 움직임을 멈추고 거꾸로 된 상태로 변경
     IEnumerator Stun(Collision2D collision, bool isFriend)
     {

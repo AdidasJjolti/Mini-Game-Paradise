@@ -107,6 +107,8 @@ public class BBCreateFriend : MonoBehaviour
             {
                 ob.GetComponent<BBFriendStates>().SetLeftMoving(true);
             }
+
+            ob.GetComponent<BBFriendStates>().SetSpeed(Random.Range(0.7f, 2.5f));
         }
         else
         {

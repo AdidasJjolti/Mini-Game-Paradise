@@ -8,8 +8,12 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] bool _isLeftMoving;
     [SerializeField] float _speed;
     [SerializeField] bool _isGrounded;
+
     [SerializeField] SpriteRenderer _renderer;
     [SerializeField] Animator _animator;
+
+    [SerializeField] GameObject _leftBGTrigger;
+    [SerializeField] GameObject _rightBGTrigger;
 
     void Awake()
     {
@@ -17,7 +21,6 @@ public class PlayerControl : MonoBehaviour
         _isLeftMoving = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector3.down, 0.6f);
@@ -44,12 +47,16 @@ public class PlayerControl : MonoBehaviour
         //Debug.Log("Player velocity is " + _rigid.velocity);
         if (_isLeftMoving == false)
         {
+            _leftBGTrigger.SetActive(true);
+            _rightBGTrigger.SetActive(false);
             _renderer.flipX = false;
             _rigid.velocity = new Vector2(0, _rigid.velocity.y);
             gameObject.transform.Translate(Vector2.right * _speed * Time.deltaTime);
         }
         else
         {
+            _leftBGTrigger.SetActive(false);
+            _rightBGTrigger.SetActive(true);
             _renderer.flipX = true;
             _rigid.velocity = new Vector2(0, _rigid.velocity.y);
             gameObject.transform.Translate(Vector2.left * _speed * Time.deltaTime);
