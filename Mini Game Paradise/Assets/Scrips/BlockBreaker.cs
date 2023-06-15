@@ -65,6 +65,7 @@ public class BlockBreaker : MonoBehaviour, ISubject
             if (collision.transform.CompareTag("Line") && _playerControl.GetGrounded())          // Line 태그에 닿았고 플레이어가 땅에 닿은 상태일 때 실행
             {
                 _playerControl.transform.Translate(Vector2.down * .5f * Time.deltaTime);
+                //_playerRigidbody2D.MovePosition(_playerRigidbody2D.position + Vector2.down * 9.8f * Time.deltaTime);
                 StartCoroutine(SetPlayerState());
                 StartCoroutine(SetBlockActive(collision));
             }

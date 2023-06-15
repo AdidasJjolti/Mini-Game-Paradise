@@ -52,6 +52,7 @@ public class PlayerControl : MonoBehaviour
             _renderer.flipX = false;
             _rigid.velocity = new Vector2(0, _rigid.velocity.y);
             gameObject.transform.Translate(Vector2.right * _speed * Time.deltaTime);
+            //_rigid.MovePosition(_rigid.position + Vector2.right * _speed * Time.deltaTime);
         }
         else
         {
@@ -60,6 +61,7 @@ public class PlayerControl : MonoBehaviour
             _renderer.flipX = true;
             _rigid.velocity = new Vector2(0, _rigid.velocity.y);
             gameObject.transform.Translate(Vector2.left * _speed * Time.deltaTime);
+            //_rigid.MovePosition(_rigid.position + Vector2.left * _speed * Time.deltaTime);
         }
 
         //Debug.Log($"_rigid.velocity.x = { _rigid.velocity.x}");
