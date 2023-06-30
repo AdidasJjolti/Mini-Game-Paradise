@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
-    [SerializeField] Player player;
-
-    void Update()
+    void OnTriggerExit2D(Collider2D collision)
     {
-        if(transform.position.y - player.transform.position.y > transform.localScale.y)
+        if(collision.CompareTag("upperTrigger"))
         {
-            transform.position = new Vector2(transform.position.x, transform.position.y - 4 * transform.localScale.y);
+            transform.position = new Vector2(transform.position.x, transform.position.y - transform.parent.childCount * transform.localScale.y);
         }
     }
 }

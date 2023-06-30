@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Rigidbody2D _rigid;
-    [SerializeField] float _speed = 2;
+    [SerializeField] float _speed = 4;
     [SerializeField] bool _isLeftMoving;
 
     void Awake()
