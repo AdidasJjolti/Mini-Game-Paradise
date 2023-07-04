@@ -282,6 +282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _distance: 5
   _resetter: {fileID: 0}
+  _trees: []
 --- !u!1 &271593179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,6 +1200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _distance: 5
   _resetter: {fileID: 0}
+  _trees: []
 --- !u!1 &1049866544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,6 +1276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _distance: 5
   _resetter: {fileID: 0}
+  _trees: []
 --- !u!1 &1082683460
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,6 +1605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _distance: 5
   _resetter: {fileID: 0}
+  _trees: []
 --- !u!1 &1416391348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,6 +1936,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 2
   _isLeftMoving: 0
+  _isStraight: 0
+  _curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.22261222
+      value: 0.74284667
+      inSlope: 1.1369979
+      outSlope: 1.1369979
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1503442192
 GameObject:
   m_ObjectHideFlags: 0
@@ -2007,6 +2045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _distance: 5
   _resetter: {fileID: 0}
+  _trees: []
 --- !u!1 &1613386091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,6 +2427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _distance: 5
   _resetter: {fileID: 0}
+  _trees: []
 --- !u!1 &1985720721
 GameObject:
   m_ObjectHideFlags: 0
