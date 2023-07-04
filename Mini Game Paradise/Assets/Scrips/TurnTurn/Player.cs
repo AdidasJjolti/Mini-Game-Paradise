@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
     {
         _startPos = _rigid.position;
         _endPos = new Vector2(_startPos.x, _startPos.y - 3f);
-        _conPos = new Vector2(_startPos.x, _startPos.y - 1.5f);
+        _conPos = new Vector2(_isLeftMoving ? _startPos.x  + 1f : _startPos.x - 1f, _startPos.y - 1.5f);
     }
 
     IEnumerator Wait()
