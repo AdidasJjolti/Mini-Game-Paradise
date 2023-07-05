@@ -29,7 +29,9 @@ public class Reposition : MonoBehaviour
     {
         if (collision.CompareTag("upperTrigger"))
         {
-            transform.position = new Vector2(_resetter.SetPosX(transform.GetSiblingIndex()), transform.position.y - transform.parent.childCount * _distance);
+            // 임시로 상하 간격 기입
+            float gap = Random.Range(0.1f, 2.0f);
+            transform.position = new Vector2(_resetter.SetPosX(transform.GetSiblingIndex()), transform.position.y - transform.parent.childCount * _distance + gap);
             SetGap();
         }
     }

@@ -15,6 +15,7 @@ TagManager:
   - rightBackgroundTrigger
   - upperBackgroundTrigger
   - Gate
+  - Tree
   layers:
   - Default
   - TransparentFX

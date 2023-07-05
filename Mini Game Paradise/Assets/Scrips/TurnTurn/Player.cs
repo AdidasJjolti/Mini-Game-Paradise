@@ -95,4 +95,14 @@ public class Player : MonoBehaviour
         _isSetPos = false;
         _curve = false;
     }
+
+
+    // ToDo : 나무와 충돌할 때 점수 오르고 효과 넣기
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Tree"))
+        {
+            Debug.Log($"{collision.transform.parent.name}\t{collision.name}에 닿았다!");
+        }
+    }
 }
