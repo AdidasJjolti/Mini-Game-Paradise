@@ -8,25 +8,29 @@ public class Player : MonoBehaviour
     [SerializeField] float _speed = 4;
     [SerializeField] bool _isLeftMoving;
     [SerializeField] bool _isStraight;
+    [SerializeField] bool _curve;
 
 
     bool _isSetPos;
     [SerializeField] Vector2 _startPos;
     [SerializeField] Vector2 _endPos;
     [SerializeField] Vector2 _conPos;
-    float _duration = 1f;
+    [SerializeField] float _duration;
+    [SerializeField] float _xPos;
+    [SerializeField] float _yPos;
     float _curTime = 0f;
 
 
     void Awake()
     {
+        _isLeftMoving = true;
         _rigid = GetComponent<Rigidbody2D>();
         _isStraight = true;
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(!_curve && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
         {
             _isLeftMoving = !_isLeftMoving;
             _isStraight = false;
@@ -73,15 +77,22 @@ public class Player : MonoBehaviour
     void SetPos()
     {
         _startPos = _rigid.position;
-        _endPos = new Vector2(_startPos.x, _startPos.y - 3f);
-        _conPos = new Vector2(_isLeftMoving ? _startPos.x  + 1f : _startPos.x - 1f, _startPos.y - 1.5f);
+        _endPos = new Vector2(_startPos.x, _startPos.y - _yPos);
+        _conPos = new Vector2(_isLeftMoving ? _startPos.x  + _xPos : _startPos.x - _xPos, _startPos.y - _yPos/2);
     }
 
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(1f);
+        if(_curve)
+        {
+            yield break;
+        }
+        _curve = true;
+
+        yield return new WaitForSeconds(_duration );
         _curTime = 0f;
         _isStraight = true;
         _isSetPos = false;
+        _curve = false;
     }
 }
