@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
     {
         if(collision.CompareTag("Tree"))
         {
-            Debug.Log($"{collision.transform.parent.name}\t{collision.name}¿¡ ´ê¾Ò´Ù!");
+            //Debug.Log($"{collision.transform.parent.name}\t{collision.name}¿¡ ´ê¾Ò´Ù!");
         }
     }
 }

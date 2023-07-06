@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Reposition : MonoBehaviour
 {
+    BoxCollider2D _collider;
+    [SerializeField] BoxCollider2D _leftFailCollider;
+    [SerializeField] BoxCollider2D _rightFailCollider;
+    [SerializeField] BoxCollider2D _treeCollider;
     [SerializeField] float _distance = 5f;
     [SerializeField] ResetGate _resetter;
     [SerializeField] Transform[] _trees;
@@ -11,12 +15,16 @@ public class Reposition : MonoBehaviour
 
     void Awake()
     {
-        _trees = new Transform[2];
+        _collider = GetComponent<BoxCollider2D>();
 
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            _trees[i] = transform.GetChild(i);
-        }
+        _trees = new Transform[2];
+        _trees[0] = transform.GetChild(0);
+        _trees[1] = transform.GetChild(1);
+
+        //for (int i = 0; i < transform.childCount; i++)
+        //{
+        //    _trees[i] = transform.GetChild(i);
+        //}
 
         _resetter = transform.GetComponentInParent<ResetGate>();
         transform.position = new Vector2(_resetter.SetPosX(transform.GetSiblingIndex()), transform.position.y);
@@ -39,8 +47,11 @@ public class Reposition : MonoBehaviour
     void SetGap()
     {
         float gap = Random.Range(0.1f, 2.0f);
+        _collider.size = new Vector2(_offsetX * 2 + gap + _treeCollider.size.x * 0.5f, _collider.size.y);
+        _leftFailCollider.offset = new Vector2((_offsetX * 4 + gap * 0.5f + _treeCollider.size.x * 0.25f) * -1, 0f);
+        _rightFailCollider.offset = new Vector2((_offsetX * 4 + gap * 0.5f + _treeCollider.size.x * 0.25f), 0f);
 
-        for(int i = 0; i < _trees.Length; i++)
+        for (int i = 0; i < _trees.Length; i++)
         {
             if(i % 2 == 0)
             {
