@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PassCollider : MonoBehaviour
+public class TreeCollider : MonoBehaviour
 {
     Player _player;
 
@@ -10,11 +10,16 @@ public class PassCollider : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
     }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") && _player.GetCollisionState() == false)
+        if(collision.CompareTag("Player"))
         {
-            Debug.Log("통과!");
+            if(_player.GetCollisionState() == false)
+            {
+                Debug.Log("나무에 닿았어");
+                _player.SetCollisionState();
+            }
         }
     }
 }

@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     [SerializeField] float _yPos;
     float _curTime = 0f;
 
+    bool _isCollided;
+
 
     void Awake()
     {
@@ -98,11 +100,21 @@ public class Player : MonoBehaviour
 
 
     // ToDo : 나무와 충돌할 때 점수 오르고 효과 넣기
-    void OnTriggerEnter2D(Collider2D collision)
+
+    public bool GetCollisionState()
     {
-        if(collision.CompareTag("Tree"))
-        {
-            //Debug.Log($"{collision.transform.parent.name}\t{collision.name}에 닿았다!");
-        }
+        return _isCollided;
+    }
+
+    public void SetCollisionState()
+    {
+        StartCoroutine(CollisionWait());
+    }
+
+    IEnumerator CollisionWait()
+    {
+        _isCollided = true;
+        yield return new WaitForSeconds(1f);
+        _isCollided = false;
     }
 }
