@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 2462cdd2f00c6fb4781ab251c1976b61
+  - enabled: 1
     path: Assets/Scenes/BreakBreak.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/TurnTurn.unity
+    guid: f676dfee8346a764eae468c0c7c00d1f
   m_configObjects: {}

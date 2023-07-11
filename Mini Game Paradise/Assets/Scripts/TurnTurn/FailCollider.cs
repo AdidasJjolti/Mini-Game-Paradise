@@ -16,6 +16,8 @@ public class FailCollider : MonoBehaviour
         if (collision.CompareTag("Player") && _player.GetCollisionState() == false)
         {
             Debug.Log("½ÇÆÐ!");
+            TurnTurnGameManager GameManager = FindObjectOfType<TurnTurnGameManager>();
+            GameManager.SetGameOver();
         }
     }
 }

@@ -108,7 +108,8 @@ public class UIManager : MonoBehaviour
 
     public void OnClickMainButton()
     {
-        // ToDo : 메인 화면 만들고 구현하기
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 
     public void BGMOnValueChanged(float bgmVolume)

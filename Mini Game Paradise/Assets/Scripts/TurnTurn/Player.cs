@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] float _xPos;
     [SerializeField] float _yPos;
     float _curTime = 0f;
-
+    
     bool _isCollided;
 
 
@@ -32,7 +33,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if(!_curve && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
+        if(!_curve && (Input.GetKeyDown(KeyCode.Space)))    //  || Input.GetMouseButtonDown(0))
         {
             _isLeftMoving = !_isLeftMoving;
             _isStraight = false;
