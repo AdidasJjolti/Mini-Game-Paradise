@@ -6,9 +6,11 @@ public class PassCollider : MonoBehaviour
 {
     Player _player;
     TurnTurnScoreManager _scoreManager;
+    TurnTurnGameManager _gameManager;
 
     void Awake()
     {
+        _gameManager = FindObjectOfType<TurnTurnGameManager>();
         _scoreManager = FindObjectOfType<TurnTurnScoreManager>();
         _player = FindObjectOfType<Player>();
     }
@@ -16,8 +18,9 @@ public class PassCollider : MonoBehaviour
     {
         if(collision.CompareTag("Player") && _player.GetCollisionState() == false)
         {
-            Debug.Log("통과!");
-            if(!SoundManager.Instance.GetComponent<AudioSource>().isPlaying)
+            //Debug.Log("통과!");
+            _gameManager.CountGates();
+            if (!SoundManager.Instance.GetComponent<AudioSource>().isPlaying)
             {
                 SoundManager.Instance.PlayJumpSound();
             }

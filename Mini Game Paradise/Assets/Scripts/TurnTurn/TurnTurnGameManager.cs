@@ -7,6 +7,7 @@ public class TurnTurnGameManager : MonoBehaviour
 {
     [SerializeField] TurnTurnUIManager _UIManager;
     bool _isGameOver;
+    [SerializeField] int _count;
 
     void Start()
     {
@@ -29,6 +30,17 @@ public class TurnTurnGameManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+    }
+
+    public void CountGates()
+    {
+        _count++;
+        Debug.Log($"통과 게이트 : {_count}개");
+    }
+
+    public int GetGateCount()
+    {
+        return _count;
     }
 
     public void SetGameOver()

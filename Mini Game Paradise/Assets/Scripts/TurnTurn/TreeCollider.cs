@@ -6,9 +6,11 @@ public class TreeCollider : MonoBehaviour
 {
     Player _player;
     TurnTurnScoreManager _scoreManager;
+    TurnTurnGameManager _gameManager;
 
     void Awake()
     {
+        _gameManager = FindObjectOfType<TurnTurnGameManager>();
         _scoreManager = FindObjectOfType<TurnTurnScoreManager>();
         _player = FindObjectOfType<Player>();
     }
@@ -19,7 +21,8 @@ public class TreeCollider : MonoBehaviour
         {
             if(_player.GetCollisionState() == false)
             {
-                Debug.Log("나무에 닿았어");
+                //Debug.Log("나무에 닿았어");
+                _gameManager.CountGates();
                 _player.SetCollisionState();
                 if (!SoundManager.Instance.GetComponent<AudioSource>().isPlaying)
                 {
