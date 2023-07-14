@@ -55,45 +55,45 @@ public class TurnTurnScoreManager : MonoBehaviour
     }
 
     // 아이템으로 점수 획득하는 경우 현재 점수에 추가
-    public void ItemScoreUpdate(_eItemType type)
+    public void ItemScoreUpdate(_eTurnTurnItemType type)
     {
         switch (type)
         {
-            case _eItemType.YELLOW_SINGLE:
+            case _eTurnTurnItemType.YELLOW_SINGLE:
                 _curScore += 10;
                 //Debug.Log("Current Score is " + _curScore);
                 break;
-            case _eItemType.ORANGE_SINGLE:
+            case _eTurnTurnItemType.ORANGE_SINGLE:
                 _curScore += 10;
                 //Debug.Log("Current Score is " + _curScore);
                 break;
-            case _eItemType.GREEN_SINGLE:
+            case _eTurnTurnItemType.GREEN_SINGLE:
                 _curScore += 10;
                 //Debug.Log("Current Score is " + _curScore);
                 break;
 
-            case _eItemType.YELLOW_DOUBLE:
+            case _eTurnTurnItemType.YELLOW_DOUBLE:
                 _curScore += 20;
                 //Debug.Log("Current Score is " + _curScore);
                 break;
-            case _eItemType.ORANGE_DOUBLE:
+            case _eTurnTurnItemType.ORANGE_DOUBLE:
                 _curScore += 20;
                 //Debug.Log("Current Score is " + _curScore);
                 break;
-            case _eItemType.GREEN_DOUBLE:
+            case _eTurnTurnItemType.GREEN_DOUBLE:
                 _curScore += 20;
                 // Debug.Log("Current Score is " + _curScore);
                 break;
 
-            case _eItemType.YELLOW_TRIPLE:
+            case _eTurnTurnItemType.YELLOW_TRIPLE:
                 _curScore += 30;
                 //Debug.Log("Current Score is " + _curScore);
                 break;
-            case _eItemType.ORANGE_TRIPLE:
+            case _eTurnTurnItemType.ORANGE_TRIPLE:
                 _curScore += 30;
                 //Debug.Log("Current Score is " + _curScore);
                 break;
-            case _eItemType.GREEN_TRIPLE:
+            case _eTurnTurnItemType.GREEN_TRIPLE:
                 _curScore += 30;
                 //Debug.Log("Current Score is " + _curScore);
                 break;

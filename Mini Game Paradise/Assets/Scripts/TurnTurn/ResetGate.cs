@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class ResetGate : MonoBehaviour
 {
+    TurnTurnGameManager _gameManager;
+
+    void Awake()
+    {
+        _gameManager = FindObjectOfType<TurnTurnGameManager>();
+    }
+
     public float SetPosX(int n)
     {
         float x;
 
         if(n % 2 == 0)
         {
-            x = Random.Range(-2f, -1f);
+            x = Random.Range(GateData.SetHorizontalDistance(_gameManager.GetGateCount()).Item2 * -1, -GateData.SetHorizontalDistance(_gameManager.GetGateCount()).Item1 * -1);
         }
         else
         {
-            x = Random.Range(1.0f, 2.0f);
+            x = Random.Range(GateData.SetHorizontalDistance(_gameManager.GetGateCount()).Item1, GateData.SetHorizontalDistance(_gameManager.GetGateCount()).Item2);
         }
 
         return x;

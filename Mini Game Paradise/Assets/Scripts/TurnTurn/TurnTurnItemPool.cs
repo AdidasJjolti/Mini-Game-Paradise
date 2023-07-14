@@ -2,27 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemPool : MonoBehaviour
+public class TurnTurnItemPool : MonoBehaviour
 {
-    private static ItemPool instance;
-    public static ItemPool Instance
-    {
-        get
-        {
-            if(!instance)
-            {
-                instance = FindObjectOfType<ItemPool>();
-
-                if(instance == null)
-                {
-                    Debug.LogError("Instance doesn't exist.");
-                    return null;
-                }
-            }
-            return instance;
-        }
-    }
-
     Dictionary<string, List<GameObject>> _itemPool = new Dictionary<string, List<GameObject>>();
     public Dictionary<string, List<GameObject>> _ItemPool
     {
@@ -44,20 +25,6 @@ public class ItemPool : MonoBehaviour
     [SerializeField] GameObject _greenTripleStar;
     [SerializeField] GameObject _orangeTripleStar;
 
-    void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else if(instance != this.GetComponent<ItemPool>())
-        {
-            Destroy(this.gameObject);
-        }
-
-        DontDestroyOnLoad(gameObject);
-    }
-
     void Start()
     {
         CreateDictionary();
@@ -66,7 +33,7 @@ public class ItemPool : MonoBehaviour
     // 각 풀에 게임오브젝트 넣는 함수
     void AddPool(string key)
     {
-        switch(key)
+        switch (key)
         {
             case "YELLOW_SINGLE":
                 GameObject ySingleStar = Instantiate(_yellowSingleStar, transform);
@@ -95,7 +62,7 @@ public class ItemPool : MonoBehaviour
                 _itemPool[key].Add(gDoubleStar);
                 break;
             case "ORANGE_DOUBLE":
-                GameObject oDoubleStar = Instantiate(_orangeDoubleStar, transform) as GameObject;
+                GameObject oDoubleStar = Instantiate(_orangeDoubleStar, transform);
                 oDoubleStar.SetActive(false);
                 _itemPool[key].Add(_orangeDoubleStar);
                 break;
@@ -137,13 +104,13 @@ public class ItemPool : MonoBehaviour
     public GameObject PoolOut(string key)
     {
         // 딕셔너리가 생성되었지만 들어간 내용이 없는 경우
-        if(_itemPool.Count == 0)
+        if (_itemPool.Count == 0)
         {
             CreateDictionary();
         }
 
         // 딕셔너리가 있지만 키 값이 잘못된 경우
-        if(_itemPool.ContainsKey(key) == false)
+        if (_itemPool.ContainsKey(key) == false)
         {
             Debug.LogError("Invalid Key");
             return null;
@@ -171,53 +138,53 @@ public class ItemPool : MonoBehaviour
     }
 
     // 제거된 아이템을 회수하는 함수
-    public void PoolIn(GameObject star, _eItemType type)
+    public void PoolIn(GameObject star, _eTurnTurnItemType type)
     {
         switch (type)
         {
-            case _eItemType.YELLOW_SINGLE:
+            case _eTurnTurnItemType.YELLOW_SINGLE:
                 star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["YELLOW_SINGLE"].Add(star);
                 break;
-            case _eItemType.GREEN_SINGLE:
+            case _eTurnTurnItemType.GREEN_SINGLE:
                 star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["GREEN_SINGLE"].Add(star);
                 break;
-            case _eItemType.ORANGE_SINGLE:
+            case _eTurnTurnItemType.ORANGE_SINGLE:
                 star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["ORANGE_SINGLE"].Add(star);
                 break;
 
-            case _eItemType.YELLOW_DOUBLE:
+            case _eTurnTurnItemType.YELLOW_DOUBLE:
                 star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["YELLOW_DOUBLE"].Add(star);
                 break;
-            case _eItemType.GREEN_DOUBLE:
+            case _eTurnTurnItemType.GREEN_DOUBLE:
                 star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["GREEN_DOUBLE"].Add(star);
                 break;
-            case _eItemType.ORANGE_DOUBLE:
+            case _eTurnTurnItemType.ORANGE_DOUBLE:
                 star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["ORANGE_DOUBLE"].Add(star);
                 break;
 
-            case _eItemType.YELLOW_TRIPLE:
+            case _eTurnTurnItemType.YELLOW_TRIPLE:
                 star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["YELLOW_TRIPLE"].Add(star);
                 break;
-            case _eItemType.GREEN_TRIPLE:
+            case _eTurnTurnItemType.GREEN_TRIPLE:
                 star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["GREEN_TRIPLE"].Add(star);
                 break;
-            case _eItemType.ORANGE_TRIPLE:
+            case _eTurnTurnItemType.ORANGE_TRIPLE:
                 star.transform.SetParent(transform);
                 star.SetActive(false);
                 _itemPool["ORANGE_TRIPLE"].Add(star);
