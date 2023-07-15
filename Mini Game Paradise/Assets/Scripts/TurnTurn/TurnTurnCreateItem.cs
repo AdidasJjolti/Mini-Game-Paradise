@@ -97,7 +97,7 @@ public class TurnTurnCreateItem : MonoBehaviour
         if (obj != null)
         {
             GameObject ob = obj;
-            ob.transform.parent = transform.parent;
+            ob.transform.parent = transform;
             //ob.transform.position = transform.parent.position + new Vector3(0, 0.5f, 0);
             SetStarPosition(ob);
             //Debug.Log($"block : {_blocks[index].position}, obj : {ob.transform.position}");
@@ -117,15 +117,15 @@ public class TurnTurnCreateItem : MonoBehaviour
         float x = Random.Range(-1f, 1f);
         float y = Random.Range(-1f, 1f);
 
-        star.transform.position = new Vector3(transform.parent.position.x + x, transform.parent.position.y + y, transform.parent.position.z);
+        star.transform.position = new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z);
 
         if(star.transform.position.x < -5.0f)
         {
-            star.transform.position = new Vector3(- 5.0f, transform.parent.position.y + y, transform.parent.position.z);
+            star.transform.position = new Vector3(- 5.0f, transform.position.y + y, transform.position.z);
         }
         else if (star.transform.position.x > 5.0f)
         {
-            star.transform.position = new Vector3(5.0f, transform.parent.position.y + y, transform.parent.position.z);
+            star.transform.position = new Vector3(5.0f, transform.position.y + y, transform.position.z);
         }
     }
 }
