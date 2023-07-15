@@ -74,9 +74,47 @@ public class Reposition : MonoBehaviour
         Debug.Log($"왼쪽 나무의 포지션은 {_trees[0].position.x}이고 오른쪽 나무의 포지션은 {_trees[1].position.x}");
 
         // 나무 한 쪽이 화면 경계에 닿으면 재배치
-        if (_trees[0].position.x < -5.0f || _trees[1].position.x > 5.0f)
+        if (_trees[0].position.x < -4.5f)
         {
-            SetGap();
+            gap = gap - Mathf.Abs(-4.5f - _trees[0].position.x);
+            _collider.size = new Vector2(_offsetX * 2 + gap + _treeCollider.size.x * 0.5f, _collider.size.y);      // 통과 충돌체 크기 수정
+            _leftFailCollider.offset = new Vector2((_offsetX * 4 + gap * 0.5f + _treeCollider.size.x * 0.25f) * -1, -0.65f);    // 왼쪽 실패 충돌체 offset 수정
+            _rightFailCollider.offset = new Vector2((_offsetX * 4 + gap * 0.5f + _treeCollider.size.x * 0.25f), -0.65f);        // 오른쪽 실패 충돌체 offset 수정
+
+            for (int i = 0; i < _trees.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    _trees[i].localPosition = new Vector2(-1 * _offsetX, _trees[i].localPosition.y);
+                    _trees[i].localPosition = new Vector2(_trees[i].localPosition.x - gap / 2, _trees[i].localPosition.y);
+                }
+                else
+                {
+                    _trees[i].localPosition = new Vector2(_offsetX, _trees[i].localPosition.y);
+                    _trees[i].localPosition = new Vector2(_trees[i].localPosition.x + gap / 2, _trees[i].localPosition.y);
+                }
+            }
+        }
+        else if (_trees[1].position.x > 4.5f)
+        {
+            gap = gap - Mathf.Abs(_trees[1].position.x - 4.5f);
+            _collider.size = new Vector2(_offsetX * 2 + gap + _treeCollider.size.x * 0.5f, _collider.size.y);      // 통과 충돌체 크기 수정
+            _leftFailCollider.offset = new Vector2((_offsetX * 4 + gap * 0.5f + _treeCollider.size.x * 0.25f) * -1, -0.65f);    // 왼쪽 실패 충돌체 offset 수정
+            _rightFailCollider.offset = new Vector2((_offsetX * 4 + gap * 0.5f + _treeCollider.size.x * 0.25f), -0.65f);        // 오른쪽 실패 충돌체 offset 수정
+
+            for (int i = 0; i < _trees.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    _trees[i].localPosition = new Vector2(-1 * _offsetX, _trees[i].localPosition.y);
+                    _trees[i].localPosition = new Vector2(_trees[i].localPosition.x - gap / 2, _trees[i].localPosition.y);
+                }
+                else
+                {
+                    _trees[i].localPosition = new Vector2(_offsetX, _trees[i].localPosition.y);
+                    _trees[i].localPosition = new Vector2(_trees[i].localPosition.x + gap / 2, _trees[i].localPosition.y);
+                }
+            }
         }
     }
 }

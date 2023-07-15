@@ -114,8 +114,8 @@ public class TurnTurnCreateItem : MonoBehaviour
 
     public void SetStarPosition(GameObject star)
     {
-        float x = Random.Range(-1f, 1f);
-        float y = Random.Range(-1f, 1f);
+        float x = Random.Range(-1.5f, 1.5f);
+        float y = Random.Range(-2.0f, 2.0f);
 
         star.transform.position = new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z);
 
