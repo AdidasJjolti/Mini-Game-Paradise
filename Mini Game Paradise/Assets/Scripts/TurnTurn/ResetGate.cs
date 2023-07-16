@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class ResetGate : MonoBehaviour
 {
-    TurnTurnGameManager _gameManager;
+    [SerializeField] TurnTurnGameManager _gameManager;
 
     void Awake()
     {
-        _gameManager = FindObjectOfType<TurnTurnGameManager>();
+        if(_gameManager == null)
+        {
+            _gameManager = FindObjectOfType<TurnTurnGameManager>();
+        }
     }
 
     public float SetPosX(int n)

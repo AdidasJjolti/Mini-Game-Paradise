@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class Player : MonoBehaviour
 {
     Rigidbody2D _rigid;
+    SpriteRenderer _renderer;
     [SerializeField] float _speed = 4;
     [SerializeField] bool _isLeftMoving;
     [SerializeField] bool _isStraight;
@@ -27,6 +28,8 @@ public class Player : MonoBehaviour
     void Awake()
     {
         _isLeftMoving = true;
+        _renderer = GetComponent<SpriteRenderer>();
+        _renderer.flipX = true;
         _rigid = GetComponent<Rigidbody2D>();
         _isStraight = true;
     }
@@ -97,6 +100,7 @@ public class Player : MonoBehaviour
         _isStraight = true;
         _isSetPos = false;
         _curve = false;
+        _renderer.flipX = !_renderer.flipX;
     }
 
 

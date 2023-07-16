@@ -48,9 +48,9 @@ public class TurnTurnCreateItem : MonoBehaviour
 
         _isCreating = true;
 
-        // 아이템 생성 확률 66%로 설정
+        // 아이템 생성 확률 50%로 설정
         float chance = Random.Range(0f, 1f);
-        if (chance > 0.66f)
+        if (chance > 0.5f)
         {
             _isCreating = false;
             yield break;
